@@ -1,3 +1,3 @@
 douya
 =====
-Fucking awesome
+=。=
