@@ -1,0 +1,39 @@
+.place-search-title {
+  border-bottom: solid 1px #EAEAEA; }
+
+.place-search-result {
+  position: relative;
+  width: 640px;
+  height: 140px;
+  overflow: hidden;
+  border-bottom: solid 1px #EAEAEA; }
+  .place-search-result .place-search-result-l {
+    float: left;
+    width: 160px; }
+    .place-search-result .place-search-result-l img {
+      margin: 20px; }
+  .place-search-result .place-search-result-r {
+    position: relative;
+    float: right;
+    width: 480px; }
+    .place-search-result .place-search-result-r h1 {
+      width: 480px;
+      margin: 20px 0;
+      position: relative; }
+    .place-search-result .place-search-result-r h6 {
+      width: 480px;
+      margin: 20px 0;
+      position: relative; }
+    .place-search-result .place-search-result-r p {
+      margin: 5px 0; }
+    .place-search-result .place-search-result-r .place-search-result-r-detail {
+      display: none;
+      width: 240px;
+      height: 130px;
+      box-shadow: 0 0 2px 1px rgba(144, 144, 144, 0.7);
+      position: absolute;
+      top: 5px;
+      left: 110px;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 0 10px; }

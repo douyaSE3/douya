@@ -1,0 +1,364 @@
+{% extends "base.html" %}  
+
+{% block title %} {{ place.chinese_name }}{{place.english_name}} {% endblock %} 
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/place_intro.css" />
+{% endblock %}
+
+{% block main-left %}  
+<h1 >{{ place }}</h1>
+    <ul class="crumb">
+        {% for place in place.parent_struct reversed %}
+        <li>
+            {% if place.children %}<div class="crumb-li-hover none"></div>{% endif %}
+            <a href="{% url "place.views.place_intro" place.id %}">{{place.chinese_name}}
+                {% if place.children %}<span class="arrow">{% endif %}</span>
+            </a>           
+            <ul class="crumb-li-subnav none">
+                {% for child in place.children %}
+                <li><a href="{% url "place.views.place_intro" child.id %}">{{ child }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% if not forloop.last %}<span class='divider'>&gt;</span>{% endif %}
+        {% endfor %}
+    </ul>
+
+	<div id="map-canvas" class="w h300"></div>
+
+    
+
+	{% if request.user.is_authenticated %}
+	<div id="place-intro-relationship">
+	    {% if relationship_info.info %}  
+	    <p>
+            我{{relationship_info.status}}
+            <a class="fancybox fancybox.iframe" href="{% url "place.views.modify_relationship" place.id %}">修改</a>
+            <a href="{% url "place.views.del_relationship" place.id %}" class="del-relationship a-style2">删除</a>
+        </p>
+        {% if relationship_info.rank %}
+        <p>我的评价:  
+            <span class="stars">
+                <span class="stars-off"><span class="stars-on" style="width:{% widthratio relationship_info.rank|add:1 1 20 %}%"></span></span>
+            </span>
+        </p>
+        {% endif %}
+	    {% if relationship_info.date %}<p>出游时间:  {{relationship_info.date|date:"Y-m-d"}}</p>{% endif %}
+	    {% if relationship_info.text %}<p>简短附注:  {{relationship_info.text}}</p>{% endif %}
+
+	    {% else %}
+	    <a class="fancybox fancybox.iframe btn1" href="{% url "place.views.add_relationship" place.id 0 %}">想去</a>
+	    <a class="fancybox fancybox.iframe btn1" href="{% url "place.views.add_relationship" place.id 1 %}">去过</a>
+	    <a class="fancybox fancybox.iframe btn1" href="{% url "place.views.add_relationship" place.id 2 %}">在这儿</a> 
+	    {% endif %}
+	</div>
+    {% endif %}
+
+    <div id="place-intro-description">
+        {% if place.description %}
+        <h2>简介:</h2>
+        <p>{{ place.description }}</p>
+        {% endif %}
+    </div>
+
+    {% if children %}
+    <div id="place-intro-hot">
+        <div class="clearfix">
+            <ul class="fr slide-prompt">
+                <li data-number="0" class="current"></li>
+                <li data-number="1"></li>
+                <li data-number="2"></li>
+                <li data-number="3"></li>
+            </ul>
+            <h2>热门景点:</h2>
+        </div>
+
+        <div class="slide clearfix" data-sliding="0">
+            <div class="slide-prev off"></div>
+            <div class="slide-next"></div>
+            <div class="slide-main">
+                <div class="slide-ul-wrapper">
+                    <ul>
+                        {% for child in children %}
+                        <li>
+                            <a href="{% url "place.views.place_intro" child.id %}" ><img src="/media/place/{% if child.has_img %}{{child.id}}{% else %}default{% endif %}.jpg" class="photo-image"></a>
+                            <div class="slide-popup none">
+                                <div class="slide-popup-left"></div>
+                                <h6>{{ child }}</h6>
+                                <p>
+                                    <span class="stars">
+                                        <span class="stars-off"><span class="stars-on" style="width:{% widthratio child.avg_of_rank 1 20 %}%"></span></span>
+                                    </span>
+                                    {% if child.avg_of_rank %}<span class="star-avg">{{child.avg_of_rank}}</span>{% else %}&nbsp;&nbsp;&nbsp;&nbsp;尚无人评价{% endif %}
+                                    <p class="last">{{child.want}}人想去,{{child.been}}人去过,{{child.being}}人在这儿</p>
+                                </p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if photos %}
+    <div id="place-intro-photo">
+        <div class="clearfix">
+            <ul class="fr slide-prompt">
+                <li data-number="0" class="current"></li>
+                <li data-number="1"></li>
+                <li data-number="2"></li>
+                <li data-number="3"></li>
+            </ul>
+            <h2>关于{{ place }}的照片:</h2>
+        </div>
+
+        <div class="slide clearfix" data-sliding="0">
+            <div class="slide-prev off"></div>
+            <div class="slide-next"></div>
+            <div class="slide-main">
+                <div class="slide-ul-wrapper">
+                    <ul>
+                        {% for photo in photos %}
+                        <li>
+                            <a class="fancybox fancybox.image" href="/media/{{photo.image}}"><img src="/media/{{photo.image}}" class="photo-image"></a>
+                            <div class="slide-popup none">
+                                <div class="slide-popup-left"></div>
+                                <p class="fr">来自：{{photo.plan.user}}</p>
+                                <h6>{{ photo.title }}</h6>
+                                <p>{{ photo.description }}</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div id="place-intro-plan">
+        <a class="fr btn2 fancybox fancybox.iframe" href="{% url "place.views.add_plan" %}">我也要去</a>
+        <h2>和{{ place }}有关的旅程:</h2>
+        {% for plan in plans %}
+        <div class="plan-wrapper">
+            <a href="{% url "traveller.views.traveller_index" plan.user.id %}" class="fl"><img class="portrait" src="/media/{{article.user.profile.portrait|default:"portrait/default.jpg" }}"></a>
+            <div class="fl plan">
+                <div class="plan-header">
+                    <h4 class="fl"><a href="{% url "place.views.view_plan" plan.id %}">{{plan.title}}</a></h4>
+                    <p class="fr">来自：<a href="{% url "traveller.views.traveller_index" plan.user.id %}">{{plan.user}}</a>({{plan.user.first_name}}{{plan.user.last_name}})</p>
+                    
+                </div>   
+                <p class="plan-content">
+                    途径：
+                    {% for play in plan.play_set.all %}
+                    <a href="{% url "place.views.place_intro" play.place.id %}">{{play.place}} </a>
+                    {% if not forloop.last %}----->{% endif %}
+                    {% endfor %}
+                </p>  
+            </div> 
+        </div>
+        {% empty %}
+        暂无旅程
+        {% endfor %}
+    </div>
+
+    <div id="place-intro-article">
+        <a class="fr btn2" href="{% url "blog.views.add_article" place.id %}">添加文字</a>
+        <h2>关于{{ place }}的文字:</h2>
+        {% for article in articles %}
+        <div class="article-wrapper">
+            <a href="{% url "traveller.views.traveller_index" article.user.id %}" class="fl"><img class="portrait" src="/media/{{article.user.profile.portrait|default:"portrait/default.jpg" }}"></a>
+            <div class="fl article">
+                <div class="article-header">
+                    <h4 class="fl"><a href="{% url "blog.views.view_article" article.id %}">{{article.title}}</a></h4>
+                    <p class="fr">来自：<a href="{% url "traveller.views.traveller_index" article.user.id %}">{{article.user}}</a>({{article.user.first_name}}{{article.user.last_name}})</p>
+                    
+                </div>   
+                <p class="article-content">{{ article.content|striptags|safe|slice:"261"}}......(<a href="{% url "blog.views.view_article" article.id %}">阅读全文</a>)</p>  
+            </div>       
+        </div>
+        {% empty %}
+        暂无文字
+        {% endfor %}
+    </div>
+
+
+
+
+{% endblock %} 
+
+{% block main-right %} 
+	<div id="place-intro-aside">	
+        <h3>大家的评价</h3>
+
+        <div class="rating-wrapper"> 
+            <span class="stars">
+                <span class="stars-off"><span class="stars-on" style="width:{% widthratio relationship_info.avg_of_rank 1 20 %}%"></span></span>
+            </span>
+            <span class="star-avg">{{relationship_info.avg_of_rank|default:""}}</span>
+            <p>(<span class="people-num">{{relationship_info.num_of_rank}}人评价</span>)</p>
+            <p>
+                <span class="small-stars">
+                    <span class="small-stars-off"><span class="small-stars-on" style="width:100%"></span></span>
+                </span>
+                <span class="power" style="width:{{relationship_info.per_of_5star}}px"></span>
+                <span class="power-num">{{relationship_info.per_of_5star|default:0}}%</span>
+            </p>
+            <p>
+                <span class="small-stars">
+                    <span class="small-stars-off"><span class="small-stars-on" style="width:80%"></span></span>
+                </span>
+                <span class="power" style="width:{{relationship_info.per_of_4star}}px"></span>
+                <span class="power-num">{{relationship_info.per_of_4star|default:0}}%</span>
+            </p>
+            <p>
+                <span class="small-stars">
+                    <span class="small-stars-off"><span class="small-stars-on" style="width:60%"></span></span>
+                </span>
+                <span class="power" style="width:{{relationship_info.per_of_3star}}px"></span>
+                <span class="power-num">{{relationship_info.per_of_3star|default:0}}%</span>
+            </p>
+            <p>
+                <span class="small-stars">
+                    <span class="small-stars-off"><span class="small-stars-on" style="width:40%"></span></span>
+                </span>
+                <span class="power" style="width:{{relationship_info.per_of_2star}}px"></span>
+                <span class="power-num">{{relationship_info.per_of_2star|default:0}}%</span>
+            </p>
+            <p>
+                <span class="small-stars">
+                    <span class="small-stars-off"><span class="small-stars-on" style="width:20%"></span></span>
+                </span>
+                <span class="power" style="width:{{relationship_info.per_of_1star}}px"></span>
+                <span class="power-num">{{relationship_info.per_of_1star|default:0}}%</span>
+            </p> 
+        </div>
+        
+        <p id="place-intro-rela">{{relationship_info.want}}人想去,{{relationship_info.been}}人去过,{{relationship_info.being}}人在这儿</p>
+	</div>
+{% endblock %}  
+
+{% block js %}
+<script type="text/javascript">
+$("body").on("click",".del-relationship",function(){
+    var msg = "您真的确定要删除吗？"; 
+    if (!confirm(msg)){ 
+        return false;
+    }
+    $.ajax({ 
+        url: $(this).attr('href'), 
+        success: function(response) { 
+            if(response.success){
+                location.reload();   
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+    return false;
+});
+</script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBcZwuumv4nlBiwv44ShGcVrqDH6UhDXfo&sensor=false&language=zh-CN"></script>
+<script type="text/javascript" src="/static/js/util.js"></script>
+<script type="text/javascript">
+
+function mapsinit() {
+		var dest="";
+		{% for i in place.parent_struct %}
+			{% if place.chinese_name|length != 0 %}
+					dest = dest + "{{i.chinese_name}},";
+			{% else %}
+					dest = dest + "{{i.english_name}},";
+			{% endif %}
+		{% endfor %}
+		dest = unescape_text(dest); 	
+		var latlng = new Object();
+		try{
+			latlng = getLatLng(dest);
+		} catch(errObj) {
+			if (errObj.errMsg=="PlaceNotFound") {
+				$('#map-canvas')[0].innerHTML = "找不到所在地点";
+			}
+		}
+		
+		var mapOptions = {
+    		center: new google.maps.LatLng(latlng.lat, latlng.lng),
+    		mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		var map = new google.maps.Map($('#map-canvas')[0],mapOptions);
+		map.fitBounds(latlng.bounds);
+		var mcOptions = {
+			girdSize: 50,
+			maxZoom: 15,
+			calculator: function(markers){
+				var index = 0;
+				var count = markers.length;
+				return {
+					index: index,
+					text: count,
+					title: "这里有"+count+"个热门地点" 
+					}
+			}
+		};
+		var markers = [];
+		var marker_main = new google.maps.Marker({
+			position: new google.maps.LatLng(latlng.lat,latlng.lng),
+			title:"{{place.chinese_name}} {{place.english_name}}",
+			latlng:latlng
+			});
+		marker_main.setMap(map);
+		var infowindow = new google.maps.InfoWindow();
+		var infowindow_content = $('#place-intro-relationship')[0].cloneNode(true);
+		infowindow_content.setAttribute('style','margin-top:0px');
+		console.log(infowindow_content);
+		google.maps.event.addListener(marker_main,'click',function(){
+						infowindow.setContent(infowindow_content);
+						infowindow.open(map,marker_main);
+						});
+		{% if children %}
+			{% for child in children %}
+				var place_path = "";
+				{% if child.chinese_name|length != 0 %}
+					{% for i in child.parent_struct %}
+						place_path = place_path + "{{i.chinese_name}},";
+					{% endfor %}
+				{% else %}
+					{% for i in child.parent_struct %} 
+						place_path = place_path + "{{i.english_name}},";
+					{% endfor %}
+					place_path = unescape_text(place_path);
+				{% endif %}
+				try{
+				var latlng = getLatLng(place_path);
+				var marker{{forloop.counter}} = new google.maps.Marker({
+								position: new google.maps.LatLng(latlng.lat,latlng.lng),
+								title:"{{child.chinese_name}} {{child.english_name}}",
+								latlng: latlng,
+								icon:'/static/icon/ArrowIcons/arrow.png'
+								});
+				//marker{{forloop.counter}}.setMap(map);
+				markers.push(marker{{forloop.counter}});
+				var infowindow_content{{forloop.counter}} = "{{child.chinese_name}} {{child.english_name}}";
+				google.maps.event.addListener(marker{{forloop.counter}},'click',function(){
+								infowindow.setContent(infowindow_content{{forloop.counter}});
+								infowindow.open(map,marker{{forloop.counter}});
+								});
+				} catch(errObj) {
+					if (errObj.errMsg=="PlaceNotFound") {
+							
+					}
+				}
+			{% endfor %}
+		{% endif %}
+		var mc = new MarkerClusterer(map,markers,mcOptions);
+
+}
+
+
+google.maps.event.addDomListener(window,'load',mapsinit);
+</script>
+{% endblock %}

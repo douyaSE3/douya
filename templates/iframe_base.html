@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>  
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+    
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/common.css">   
+    <link rel="stylesheet" href="/static/css/component.css"> 
+    <link rel="stylesheet" href="/static/css/font.css"> 
+    <link rel="stylesheet" href="/static/css/iframe.css">  
+
+    {% block css %}{% endblock %}
+
+</head>  
+<body>     
+    <header id="iframe-header" class="w pr">       
+
+    </header>
+
+    <div id="iframe-main" class="w600 pr bc clearfix">
+        {% block main %}{% endblock %}  
+    </div>
+      
+    <footer id="iframe-footer" class="w pr">
+        
+    </footer>
+</body>  
+
+    <script language="javascript" src="/static/js/jquery-1.9.1.min.js"></script> 
+    <script language="javascript" src="/static/js/commom.js"></script>
+    {% block js %}
+    {% endblock %} 
+    
+</html>
+
+
+    

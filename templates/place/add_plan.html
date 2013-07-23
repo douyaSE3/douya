@@ -1,0 +1,45 @@
+{% extends "iframe_base.html" %}  
+
+{% block main %}
+<form action="#" method="post">
+    <fieldset>
+        <legend>建立新旅程</legend>
+        {{ form.non_field_errors }}
+        {% csrf_token %} 
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+        <div class="form-item">
+            {{ field.label_tag }} {{ field }} {{ field.errors }} 
+        </div>
+        {% endfor %}
+        <div class="form-item"><input type="submit" class="btn"></div>
+    </fieldset>
+</form>
+{% endblock %}  
+
+{% block js %}
+<script type="text/javascript">
+$("form").submit(function(){  
+    var formData = new FormData($(this)[0]);
+    $.ajax({ 
+        data: formData,
+        type: $(this).attr('method'), 
+        url: $(this).attr('action'), 
+        success: function(response) { 
+            if(response.success){
+                parent.location.href="/place/edit_plan/"+response.plan_id;  
+                parent.$.fancybox.close();
+            }else{
+                $("body").html(response); 
+            }   
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+    return false;
+});
+</script>
+{% endblock %}

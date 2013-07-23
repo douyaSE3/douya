@@ -1,0 +1,329 @@
+{% extends "base.html" %}  
+
+{% block title %} {{ traveller }}的旅行主页 {% endblock %} 
+
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/traveller_index.css"/>
+{% endblock %}
+
+
+{% block main-left %}   
+<div class="clearfix" id="traveller-index-header">
+    <a href="{% url "traveller.views.traveller_index" traveller.id %}" class="fl">
+        <img class="photo-image" src="/media/{{traveller.profile.portrait|default:"portrait/default.jpg" }}">
+    </a>
+    <div class="fl" id="traveller-detail">
+        <h1>{{traveller}}({{traveller.first_name}}{{traveller.last_name}})</h1>
+        <p>{{traveller.profile.sex}}</p>
+        <p>加入时间：{{traveller.date_joined|date:"Y-m-d h:m:s"}}</p>
+        {% ifequal request.user.id traveller.id %}
+        <p><a href="{% url "traveller.views.modify" %}">修改个人资料</a></p>
+        {% endifequal %}
+    </div>  
+</div>
+<ul class="tabs">
+    <li><a href="?select=0">足迹</a></li>
+    <li><a href="?select=1">想去</a></li>
+    <li><a href="?select=2">去过</a></li>
+    <li><a href="?select=3">在这儿</a></li>
+    <li><a href="?select=4">旅程</a></li>
+    <li><a href="?select=5">文字</a></li>
+</ul>
+
+<div class="tabs-content none">
+	<div id="map-wrapper" class="w clearfix">
+    <div id="map-canvas"></div>
+    <div id="map-controller">    
+        <a href="javascript:void(0);" id="map-prev" class="fl"></a>
+        <a href="javascript:void(0);" id="map-home" class="fl"></a>
+        <a href="javascript:void(0);" id="map-next" class="fr"></a>
+    </div>
+</div>
+</div>
+
+<div class="tabs-content none">
+{% for relationship in relationships %}
+{% ifequal relationship.status 0 %}
+<div class="traveller-index-placelist">
+<a href="{% url "place.views.place_intro" relationship.place.id %}">
+    <img src="/media/place/{% if relationship.place.has_img %}{{relationship.place.id}}{% else %}default{% endif %}.jpg" class="fl photo-image">
+</a>
+<p><a href="{% url "place.views.place_intro" relationship.place.id %}">
+    {{relationship.place.chinese_name}}{{relationship.place.english_name}}
+</a></p>
+
+{% if relationship.rank %}
+<div>我的评价：
+<span class="stars">
+    <span class="stars-off"><span class="stars-on" style="width:{% widthratio relationship.rank|add:1 1 20 %}%"></span></span>
+</span>
+</div>
+{% endif %}
+{% if relationship.date %}<p>出行时间：{{relationship.date|date:"Y-m-d"}}</p>{% endif %}
+{% if relationship.text %}<p>简短附注：{{relationship.text}}</p>{% endif %}
+
+{% ifequal request.user.id traveller.id %}
+<div class="traveller-index-placelist-button"><a class="fancybox fancybox.iframe" href="{% url "place.views.modify_relationship" relationship.place.id %}">修改</a>
+<a href="{% url "place.views.del_relationship" relationship.place.id %}" class="del del-relationship">删除</a></div>
+{% endifequal %}
+</div>
+{% endifequal %}
+{% endfor %}
+</div>
+
+<div class="tabs-content none">
+{% for relationship in relationships %}
+{% ifequal relationship.status 1 %}
+<div class="traveller-index-placelist">
+<a href="{% url "place.views.place_intro" relationship.place.id %}">
+    <img src="/media/place/{% if relationship.place.has_img %}{{relationship.place.id}}{% else %}default{% endif %}.jpg" class="fl photo-image">
+</a>
+<p><a href="{% url "place.views.place_intro" relationship.place.id %}">
+    {{relationship.place.chinese_name}}{{relationship.place.english_name}}
+</a></p>
+
+{% if relationship.rank %}
+<div>我的评价：
+<span class="stars">
+    <span class="stars-off"><span class="stars-on" style="width:{% widthratio relationship.rank|add:1 1 20 %}%"></span></span>
+</span>
+</div>
+{% endif %}
+{% if relationship.date %}<p>出行时间：{{relationship.date|date:"Y-m-d"}}</p>{% endif %}
+{% if relationship.text %}<p>简短附注：{{relationship.text}}</p>{% endif %}
+
+{% ifequal request.user.id traveller.id %}
+<div class="traveller-index-placelist-button"><a class="fancybox fancybox.iframe" href="{% url "place.views.modify_relationship" relationship.place.id %}">修改</a>
+<a href="{% url "place.views.del_relationship" relationship.place.id %}" class="del del-relationship">删除</a></div>
+{% endifequal %}
+</div>
+{% endifequal %}
+{% endfor %}
+</div>
+
+<div class="tabs-content none">
+{% for relationship in relationships %}
+{% ifequal relationship.status 2 %}
+<div class="traveller-index-placelist">
+<a href="{% url "place.views.place_intro" relationship.place.id %}">
+    <img src="/media/place/{% if relationship.place.has_img %}{{relationship.place.id}}{% else %}default{% endif %}.jpg" class="fl photo-image">
+</a>
+<p><a href="{% url "place.views.place_intro" relationship.place.id %}">
+    {{relationship.place.chinese_name}}{{relationship.place.english_name}}
+</a></p>
+
+{% if relationship.rank %}
+<div>我的评价：
+<span class="stars">
+    <span class="stars-off"><span class="stars-on" style="width:{% widthratio relationship.rank|add:1 1 20 %}%"></span></span>
+</span>
+</div>
+{% endif %}
+{% if relationship.date %}<p>出行时间：{{relationship.date|date:"Y-m-d"}}</p>{% endif %}
+{% if relationship.text %}<p>简短附注：{{relationship.text}}</p>{% endif %}
+
+{% ifequal request.user.id traveller.id %}
+<div class="traveller-index-placelist-button"><a class="fancybox fancybox.iframe" href="{% url "place.views.modify_relationship" relationship.place.id %}">修改</a>
+<a href="{% url "place.views.del_relationship" relationship.place.id %}" class="del del-relationship">删除</a></div>
+{% endifequal %}
+</div>
+{% endifequal %}
+{% endfor %}
+</div>
+
+<div class="tabs-content none">
+{% for plan in plans %}
+    <div class="plan-wrapper clearfix">
+        <a href="{% url "traveller.views.traveller_index" plan.user.id %}" class="fl"><img class="portrait" src="/media/{{article.user.profile.portrait|default:"portrait/default.jpg" }}"></a>
+        <div class="fl plan">
+            <div class="plan-header">
+                <h4 class="fl"><a href="{% url "place.views.view_plan" plan.id %}">{{plan.title}}</a></h4>
+            </div>   
+            <p class="plan-content">
+                途径：
+                {% for play in plan.play_set.all %}
+                <a href="{% url "place.views.place_intro" play.place.id %}">{{play.place}} </a>
+                {% if not forloop.last %}----->{% endif %}
+                {% endfor %}
+            </p>  
+        </div> 
+    </div>
+{% empty %}
+<p>还没旅程呢，<a href="{% url "place.views.add_plan" %}" class="fancybox fancybox.iframe" >创建一个吧！</a></p>
+{% endfor %}
+</div>
+
+<div class="tabs-content none">
+{% for article in articles %}
+    <div class="article-wrapper">
+        <a href="{% url "traveller.views.traveller_index" article.user.id %}" class="fl"><img class="portrait" src="/media/{{article.user.profile.portrait|default:"portrait/default.jpg" }}"></a>
+        <div class="fl article">
+            <div class="article-header">
+                <span class="fr">{{article.update_time|date:"Y-m-d h:m:s" }}</span>                 
+                <h4 class="fl"><a href="{% url "blog.views.view_article" article.id %}">{{article.title}}</a></h4>                  
+            </div>   
+            <p class="article-content">{{ article.content|striptags|safe|slice:"261"}}......(<a href="{% url "blog.views.view_article" article.id %}">阅读全文</a>)</p>  
+        </div>       
+    </div>
+{% empty %}
+<p>你还没留下什么呢！</p>
+{% endfor %}
+</div>
+
+
+{% endblock %}  
+
+{% block js %}
+<script type="text/javascript">
+$(".del-relationship").click(function(){  
+    $.ajax({ 
+        url: $(this).attr('href'), 
+        success: function(response) { 
+            if(response.success){
+                location.reload();   
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+    return false;
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {  
+    //获取url参数的函数
+    (function($){
+        $.getUrlParam = function(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r!=null) return unescape(r[2]);
+            return null;
+        }
+    })(jQuery);
+    var select = $.getUrlParam('select')
+    if(select==null){select=0;}
+    $('.tabs-content').eq(select).removeClass('none');
+    $('.tabs a').eq(select).addClass('on');
+});
+</script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBcZwuumv4nlBiwv44ShGcVrqDH6UhDXfo&sensor=false&language=zh-CN"></script>
+<script type="text/javascript" src="/static/js/util.js"></script>
+<script type="text/javascript">
+function mapsinit() {
+		var map = new google.maps.Map(document.getElementById('map-canvas'),{
+				minZoom:1,
+				zoom:1,
+				center: new google.maps.LatLng(50, 0),
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+		});
+		var bounds = getLatLng("世界,").bounds;
+		var route_path = [];
+		var max_marker;
+		{% for place in places %}
+			var place_path = "";
+			{% if place.chinese_name|length != 0 %}
+				{% for i in place.parent_struct %}
+					place_path = place_path + "{{i.chinese_name}},";
+				{% endfor %}
+			{% else %}
+				{% for i in place.parent_struct %}
+					place_path = place_path + "{{i.english_name}},";
+				{% endfor %}
+			place_path = unescape_text(place_path);
+			{% endif %}
+			try{
+				var latlng = getLatLng(place_path);
+				var marker{{forloop.counter}} = new google.maps.Marker({
+						position: new google.maps.LatLng(latlng.lat,latlng.lng),
+						title:"{{ place.chinese_name }} {{place.english_name}}",
+						latlng: latlng,
+						icon:'http://labs.google.com/ridefinder/images/mm_20_blue.png'
+						});
+				marker{{forloop.counter}}.setMap(map);
+				bounds.extend(marker{{forloop.counter}}.position);
+				var infowindow = new google.maps.InfoWindow();
+				var infowindow_content{{forloop.counter}} = ["{{place.chinese_name}} {{place.english_name}}",
+					latlng.lat+","+latlng.lng].join('<br />');
+				route_path.push(new google.maps.LatLng(latlng.lat,latlng.lng));
+				google.maps.event.addListener(marker{{forloop.counter}},'click',function(){
+								infowindow.setContent(infowindow_content{{forloop.counter}});
+								infowindow.open(map,marker{{forloop.counter}});
+								});
+				max_marker = {{forloop.counter}};
+
+			} catch(errObj) {
+					if (errObj.errMsg=="PlaceNotFound") {
+						console.log("Place Not Found of "+place_path);
+					}
+			}
+		{% endfor %}
+		var lineSymbol = {
+			path:'M 0,-1 0,1',
+			scale:4,
+			strokeOpacity:0.8,
+			strokeColor: '#393'
+		};
+		var routes_path_line = new google.maps.Polyline({
+				path: route_path,
+				strokeColor:"#FF0000",
+				strokeOpacity:0,
+				strokeWeight:2,
+				icons:[{
+					icon:lineSymbol,
+					offset:'0',
+					repeat: '20px'
+				}],
+				});
+		//routes_path_line.setMap(map);
+		
+		map.fitBounds(bounds);
+		var current_marker = 0;
+		$('#map-prev').click(function(){
+						console.log('prev');
+						current_marker--;
+						if (current_marker < 1){
+							current_marker = max_marker;
+						}
+						display_marker_route(current_marker);
+						});
+		$('#map-next').click(function(){
+						console.log('next');
+						console.log(current_marker);
+						console.log(max_marker);
+						current_marker++;
+						if (current_marker > max_marker){
+							current_marker = 1;
+						}
+						display_marker_route(current_marker);
+						});
+		$('#map-home').click(function() {
+						console.log('home');
+						current_marker = 0;
+						if (infowindow) {
+							infowindow.close();
+						}
+						map.fitBounds(bounds);
+						});
+		function display_marker_route(current_marker_number) {
+				var cur_marker = eval("marker"+current_marker_number);
+				var cur_infowindow_content = eval("infowindow_content"+current_marker_number);
+				infowindow.setContent(cur_infowindow_content);
+				infowindow.open(map,cur_marker);
+				map.fitBounds(cur_marker.latlng.bounds);
+		}
+		function animateCircle() {
+			var count = 0;
+			offsetId = window.setInterval(function(){
+							count = (count+1)%200;
+							var icons = routes_path_line.get('icons');
+							icons[0].offset = (count/5)+'px';
+							routes_path_line.set('icons',icons);
+							},20);
+		}
+		//animateCircle();
+}
+google.maps.event.addDomListener(window,'load',mapsinit);
+</script>
+{% endblock %}

@@ -1,0 +1,206 @@
+{% extends "base.html" %}  
+
+{% block title %} 豆芽旅行 {% endblock %} 
+
+{% block css %} 
+<link rel="stylesheet" href="/static/css/index.css">
+{% endblock %} 
+
+{% block main %}   
+<div id="index-search-wrapper">
+    <form method="GET" action="{% url "place.views.place_search" %}" id="index-search">
+        <input type="text" name="q" placeholder="景点、旅馆、餐馆、城市、国家" action="{% url "place.views.place_search" %}" />
+        <input type="submit" value="" />
+    </form>
+</div>
+<div id="index-wrapper">
+	<div id="index">	
+		<div id="index-prev" class="none"></div>
+		<div id="index-next" class="none"></div>
+		<div id="index-map" data-sliding="0">
+			<a class="index-map-item" id="asia"></a>
+			<div class="index-map-detail none">
+				<div class="close fr"></div>
+			    <h2><a href="{% url "place.views.place_intro" 100001 %}">亚洲</a></h2>
+		        {% for place in asia %}
+		        <p>
+		    	    <a href="{% url "place.views.place_intro" place.id %}" class="country">{{ place.chinese_name }}</a>
+		    	    {% for child in place.children %}
+		    	    <a href="{% url "place.views.place_intro" child.id %}">{{ child.chinese_name }}</a>
+		    	    {% endfor %}
+		        </p>
+		        {% endfor %}
+			</div>
+			<a class="index-map-item" id="africa"></a>
+			<div class="index-map-detail none">
+				<div class="close fr"></div>
+			    <h2><a href="{% url "place.views.place_intro" 110557 %}">非洲</a></h2>
+		        {% for place in africa %}
+		        <p>
+		    	    <a href="{% url "place.views.place_intro" place.id %}" class="country">{{ place.chinese_name }}</a>
+		    	    {% for child in place.children %}
+		    	    <a href="{% url "place.views.place_intro" child.id %}">{{ child.chinese_name }}</a>
+		    	    {% endfor %}
+		        </p>
+		        {% endfor %}
+			</div>
+			<a class="index-map-item" id="europe"></a>
+			<div class="index-map-detail none">
+				<div class="close fr"></div>
+			    <h2><a href="{% url "place.views.place_intro" 103697 %}">欧洲</a></h2>
+		        {% for place in europe %}
+		        <p>
+		    	    <a href="{% url "place.views.place_intro" place.id %}" class="country">{{ place.chinese_name }}</a>
+		    	    {% for child in place.children %}
+		    	    <a href="{% url "place.views.place_intro" child.id %}">{{ child.chinese_name }}</a>
+		    	    {% endfor %}
+		        </p>
+		        {% endfor %}
+			</div>
+			<a class="index-map-item" id="oceania"></a>
+			<div class="index-map-detail none">
+				<div class="close fr"></div>
+			    <h2><a href="{% url "place.views.place_intro" 113457 %}">大洋洲</a></h2>
+		        {% for place in oceania %}
+		        <p>
+		    	    <a href="{% url "place.views.place_intro" place.id %}" class="country">{{ place.chinese_name }}</a>
+		    	    {% for child in place.children %}
+		    	    <a href="{% url "place.views.place_intro" child.id %}">{{ child.chinese_name }}</a>
+		    	    {% endfor %}
+		        </p>
+		        {% endfor %}
+			</div>
+			<a class="index-map-item" id="northamerica"></a>
+			<div class="index-map-detail none">
+				<div class="close fr"></div>
+			    <h2><a href="{% url "place.views.place_intro" 110996 %}">北美</a></h2>
+		        {% for place in northamerica %}
+		        <p>
+		    	    <a href="{% url "place.views.place_intro" place.id %}" class="country">{{ place.chinese_name }}</a>
+		    	    {% for child in place.children %}
+		    	    <a href="{% url "place.views.place_intro" child.id %}">{{ child.chinese_name }}</a>
+		    	    {% endfor %}
+		        </p>
+		        {% endfor %}
+			</div>
+			<a class="index-map-item" id="southamerica"></a>
+			<div class="index-map-detail none">
+				<div class="close fr"></div>
+			    <h2><a href="{% url "place.views.place_intro" 113080 %}">南美</a></h2>
+		        {% for place in southamerica %}
+		        <p>
+		    	    <a href="{% url "place.views.place_intro" place.id %}" class="country">{{ place.chinese_name }}</a>
+		    	    {% for child in place.children %}
+		    	    <a href="{% url "place.views.place_intro" child.id %}">{{ child.chinese_name }}</a>
+		    	    {% endfor %}
+		        </p>
+		        {% endfor %}
+			</div>
+			<a class="index-map-item" id="antarctica"></a>
+			<div class="index-map-detail none">
+				<div class="close fr"></div>
+			    <h2><a href="{% url "place.views.place_intro" 114283 %}">南极洲</a></h2>
+		        {% for place in antarctica %}
+		        <p>
+		    	    <a href="{% url "place.views.place_intro" place.id %}" class="country">{{ place.chinese_name }}</a>
+		    	    {% for child in place.children %}
+		    	    <a href="{% url "place.views.place_intro" child.id %}">{{ child.chinese_name }}</a>
+		    	    {% endfor %}
+		        </p>
+		        {% endfor %}
+			</div>
+		</div>
+		<ul id="index-slide">
+			<li><img src="/static/images/tianye.jpg" /></li>
+			<li><img src="/static/images/naoshi.jpg" /></li>
+			<li><img src="/static/images/xueshan.jpg" /></li>
+			<li><img src="/static/images/tianye.jpg" /></li>
+		</ul>
+		
+	</div>
+</div> 
+
+<!-- <article id="slider">
+	<input checked type="radio" name="slider" id="slide1"></input>
+	<input type="radio" name="slider" id="slide2"></input>
+	<input type="radio" name="slider" id="slide3"></input>
+
+	<div id="slides"> 
+		<div id="overflow"> 
+			<div class="inner"> 
+				<article> 
+					<div class="info">
+						<h3>纪录点滴</h3> by <a href="">test</a>
+					</div> 
+					<img src="../static/images/xueshan.jpg"> 
+				</article> 
+				<article> 
+					<div class="info">
+						<h3>分享旅程</h3> by <a href="">test</a>
+					</div> 
+					<img src="../static/images/tianye.jpg"> 
+				</article> 
+				<article> 
+					<div class="info">
+						<h3>构想计划</h3> by <a href="">test</a>
+					</div> 
+					<img src="../static/images/naoshi.jpg"> 
+				</article>  
+			</div> 
+		</div> 
+	</div>
+
+
+	<div id="controler">
+		<label for="slide1"></label>
+		<label for="slide2"></label>
+		<laber for="slide3"></label>
+	</div>
+</article>  -->
+{% endblock %}  
+
+{% block js %}
+<script type="text/javascript">
+$('#index').mouseover(function(){
+	$('#index-prev').removeClass('none');
+	$('#index-next').removeClass('none');
+}).mouseout(function(){
+	$('#index-prev').addClass('none');
+	$('#index-next').addClass('none');
+});
+$('#index-prev').click(function(){
+	if($('#index-map').data('sliding')==1){
+		return true;
+	}
+	var current = parseInt($('#index-slide').css('left').replace('px',''));
+	var offset = current+960;
+	if(offset>0){
+		return true;
+	}
+	$('#index-map').data('sliding',1);
+    $('#index-slide').animate({'left':offset+"px"},function(){
+    	$('#index-map').data('sliding',0);
+    });
+});
+$('#index-next').click(function(){
+	if($('#index-map').data('sliding')==1){
+		return true;
+	}
+	var current = parseInt($('#index-slide').css('left').replace('px',''));
+	var offset = current-960;
+	if(offset<-3000){
+		return true;
+	}
+	$('#index-map').data('sliding',1);
+    $('#index-slide').animate({'left':offset+"px"},function(){
+    	$('#index-map').data('sliding',0);
+    });
+});
+$('.index-map-item').click(function(){
+    $(this).next().removeClass('none');
+});
+$('.close').click(function(){
+	$(this).parent().addClass('none');
+})
+</script>
+{% endblock %}

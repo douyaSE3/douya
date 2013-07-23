@@ -1,0 +1,60 @@
+@charset "UTF-8";
+article {
+  background-color: #F7F7F7;
+  height: auto;
+  overflow: hidden;
+  /* 信息 */ }
+  article h1 {
+    font-size: 28px;
+    margin: 10px 0; }
+  article h2 {
+    font-size: 12px;
+    color: #666; }
+  article section {
+    border-top-style: solid;
+    border-top-color: #EAEAEA;
+    border-bottom-style: solid;
+    border-bottom-color: #EAEAEA;
+    border-width: 2px; }
+  article #view-article-headimg {
+    float: left;
+    width: 8%; }
+  article #view-article-content {
+    float: right;
+    width: 90%; }
+  article .view-article-button {
+    padding-left: 2px;
+    height: 25px; }
+
+#view-article-comment {
+  width: 640px;
+  height: auto;
+  overflow: hidden;
+  display: block;
+  background-color: #F7F7F7;
+  /* 时间 */
+  /* 内容 */ }
+  #view-article-comment li {
+    float: right;
+    width: 90%;
+    padding: 10px 0;
+    border-top: solid;
+    border-color: #EAEAEA;
+    border-width: 1px; }
+  #view-article-comment h2 {
+    font-size: 12px;
+    color: #5C5C5C; }
+  #view-article-comment h3 {
+    font-size: 12px;
+    color: #666; }
+  #view-article-comment a {
+    font-size: 12px; }
+  #view-article-comment #comments-num {
+    font-size: 20px;
+    color: #369; }
+  #view-article-comment #view-article-comment-headimg {
+    float: left;
+    width: 10%; }
+  #view-article-comment #view-article-comment-content {
+    float: right;
+    width: 88%; }

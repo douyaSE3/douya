@@ -1,0 +1,78 @@
+#traveller-index-header{
+	margin-bottom: 40px;
+
+	#traveller-detail{
+		margin-left: 22px;
+
+		h1{
+			margin-bottom: 8px;
+		}
+
+		p{
+			line-height:22px;color: #444;
+		}
+	}
+}
+
+#map-wrapper{
+	margin-top:22px;
+}
+
+.traveller-index-placelist{
+	border-bottom:solid 1px #EAEAEA;
+	height:130px;overflow:hidden;
+	position:relative;
+	.traveller-index-placelist-button{
+		position:absolute;right: 5px;bottom: 5px;z-index:1;
+	}
+	p{
+		margin:10px 0;
+	}
+	img{
+		margin:10px 20px 10px 0;
+	}
+}
+
+.plan-wrapper{
+    max-height: 100px;margin-top: 22px;
+
+    .plan{
+        width: 580px;margin-left: 12px;
+
+        .plan-header{
+            line-height: 26px;height: 26px;width: 100%;padding: 4px;
+
+            h4{
+                font-size: 14px;
+            } 
+        }
+
+        .plan-content{
+            padding: 8px 0 12px 4px;line-height: 1.62;margin-bottom: 22px;
+        }
+    }  
+}
+
+.article-wrapper{
+    max-height: 160px;margin-top: 22px;
+
+    .article{
+        width: 580px;margin-left: 12px;
+
+        .article-header{
+            line-height: 26px;height: 26px;width: 100%;padding: 4px;
+
+            h4{
+                font-size: 14px;
+            } 
+
+            .fr{
+                color:#999;
+            }
+        }
+
+        .article-content{
+            padding: 8px 0 12px 4px;line-height: 1.62;margin-bottom: 32px;
+        }
+    }  
+}

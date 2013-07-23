@@ -1,0 +1,83 @@
+{% extends "base.html" %}  
+
+{% block title %} {{article.place.chinese_name}}{{article.place.english_name}}的文字 {% endblock %} 
+
+{% block css %} <link rel="stylesheet" href="/static/css/view_article.css"> {% endblock %}
+
+{% block main-left %}   
+
+<article>
+    <h1>{{article.title}}</h1>
+    <div id="view-article-headimg">
+        <a href="{% url "traveller.views.traveller_index" article.user.id %}"><img class="portrait" src="/media/{{article.user.profile.portrait|default:"portrait/default.jpg" }}"></a>
+    </div>
+
+    <div id="view-article-content">
+        <h2 class="mb10">{{article.update_time|date:"Y-m-d h:m:s" }}</h2>
+        <h4 class="mb10">来自:<a href="{% url "traveller.views.traveller_index" article.user.id %}">{{article.user}}</a>({{article.user.first_name}}{{article.user.last_name}})</h4>
+        <h4 class="mb10">关于:<a class="a-style1" href="{% url "place.views.place_intro" article.place.id %}">{{article.place.chinese_name}}{{article.place.english_name}}</a>的游记</h4>
+        <section>{{article.content|safe}}</section>
+        {% if request.user.is_authenticated %}  
+
+        {% ifequal article.user.id request.user.id %}
+        <div class="view-article-button mt10">
+            <a class="a-style2 m10" href="{% url "blog.views.edit_article" article.id %}">>>修改</a>
+            <a class="del a-style2 m10" href="{% url "blog.views.del_article" article.id %}">>>彻底删除</a>
+        </div>
+        {% endifequal %}
+    </div>
+</article>
+
+<ul id="view-article-comment">
+    <li><h2><span id="comments-num">{{ comments_num }}</span>条评论</h2></li>
+    {% for comment in comments %}
+    <li>
+        <div id="view-article-comment-headimg">
+            <a href="{% url "traveller.views.traveller_index" comment.user.id %}"><img class="portrait" src="/media/{{comment.user.profile.portrait|default:"portrait/default.jpg" }}"></a>
+        </div>
+        <div id="view-article-comment-content">
+            <h2 class="mb10"><a href="{% url "traveller.views.traveller_index" comment.user.id %}">{{comment.user.username}}</a>:{{comment.content}}</h2>
+            <h3 class="mb10">{{comment.update_time|date:"Y-m-d H:i:s"}}</h3>
+        </div>
+    </li>
+    {% endfor %}
+
+    <form id="info-form" class="fr" action="#" method="post">
+        <fieldset>
+            <legend>回复</legend>
+            {{ form.non_field_errors }}
+            {% csrf_token %} 
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+            <div class="form-item">
+                <p>{{ field.label_tag }}</p>
+                {{ field }} {{ field.errors }} 
+            </div>
+            {% endfor %}
+            <div class="form-item fr"><input type="submit" value="加上去" class="btn"/></div>
+        </fieldset>
+    </form>
+</ul>
+
+{% endif %}
+
+{% endblock %}  
+
+{% block main-right %} 
+
+{% endblock %}  
+
+{% block js %}
+<script type="text/javascript">
+//确认删除 
+$("body").on("click",".del",function(){
+    var msg = "您真的确定要删除吗？"; 
+    if (confirm(msg)){ 
+        return true; 
+    }
+    return false;
+});
+</script>
+{% endblock %}

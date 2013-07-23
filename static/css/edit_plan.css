@@ -1,0 +1,147 @@
+#edit-plan-main {
+  margin-bottom: 30px; }
+
+#edit-plan-main-left {
+  float: left;
+  width: 300px;
+  height: 300px;
+  padding-right: 20px; }
+
+#edit-plan-main-search-wrapper {
+  margin-bottom: 10px;
+  height: 30px;
+  line-height: 30px;
+  background: #f2f2f2; }
+
+#edit-plan-main-search {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url("../images/edit-plan-main-search.png") no-repeat center; }
+
+#edit-plan-main-input {
+  display: inline-block;
+  outline: none;
+  border: none;
+  background: #f2f2f2;
+  top: -8px;
+  position: relative;
+  height: 16px;
+  width: 256px;
+  line-height: 12px;
+  font-size: 12px;
+  color: #737373; }
+
+#edit-plan-main-search-results {
+  height: 100%;
+  overflow-y: auto; }
+
+.edit-plan-main-search-results-result {
+  background: #f2f2f2;
+  height: 50px;
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-bottom: 6px; }
+
+.edit-plan-main-search-results-result a {
+  font-size: 14px;
+  color: #369; }
+
+.edit-plan-main-search-results-result a div {
+  height: 40px;
+  width: 200px;
+  padding: 5px; }
+
+#edit-plan-main-search-result {
+  height: 100%;
+  position: relative; }
+
+#edit-plan-main-search-result-frame1 {
+  position: absolute;
+  width: 666px;
+  height: 348px;
+  left: 306px;
+  top: -50px;
+  border: 1px solid #b0b0b0; }
+
+#edit-plan-main-search-result-frame2 {
+  position: absolute;
+  width: 314px;
+  height: 60px;
+  left: -8px;
+  top: -5px;
+  background: #fff;
+  border: 1px solid #b0b0b0;
+  border-right: none; }
+
+#edit-plan-main-search-result-header {
+  height: 50px;
+  background: #f2f2f2;
+  font-size: 14px;
+  color: #369;
+  z-index: 1;
+  position: relative; }
+
+#edit-plan-main-search-place-name-wrapper {
+  height: 40px;
+  width: 200px;
+  padding: 5px; }
+
+#edit-plan-add-play {
+  width: 40px;
+  height: 40px;
+  background: url("../images/edit-plan-add.png") no-repeat center;
+  display: inline-block;
+  margin-top: 6px; }
+
+#edit-plan-add-play:hover {
+  background: url("../images/edit-plan-add-pressed.png") no-repeat center; }
+
+#edit-plan-main-search-result-detail {
+  height: 220px;
+  overflow-y: auto;
+  background: #f2f2f2;
+  font-size: 12px;
+  padding: 10px;
+  margin-top: 10px;
+  color: #737373; }
+
+#edit-plan-main-right {
+  float: left;
+  width: 640px; }
+
+#edit-plan-plays {
+  background: #f2f2f2;
+  padding: 10px;
+  position: relative; }
+
+#edit-plan-plays-main {
+  margin-top: 10px;
+  width: 920px;
+  min-height: 133px; }
+
+.edit-plan-play {
+  width: 110px;
+  height: 172px;
+  font-size: 13px;
+  text-align: center; }
+
+.edit-plan-play h4 {
+  margin-top: 5px;
+  border-top: 1px dotted #999999;
+  border-bottom: 1px dotted #999999; }
+
+.edit-plan-route {
+  width: 80px;
+  position: relative; }
+
+.edit-plan-plays-main-line {
+  position: absolute;
+  top: 32px;
+  width: 80px;
+  height: 20px;
+  background: url("../images/edit-plan-plays-main-line.png") repeat-x center; }
+
+.edit-plan-edit-route {
+  display: block;
+  margin-left: 18px; }

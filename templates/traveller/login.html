@@ -1,0 +1,33 @@
+{% extends "base.html" %}  
+
+{% block title %} 登录豆芽 {% endblock %} 
+
+{% block main-left %}   
+<h1 class="mb20">欢迎来到豆芽旅行!</h1> 
+<form id="info-form" class="w400" action="#" method="post">
+    <fieldset>
+        <legend>登录</legend>
+        <div class="lab">
+            <h2 class="fl">登录</h2>
+            {% if not request.user.is_authenticated %} 
+            <div class="fr">
+                <span class="m10">>>还没有账号??<span>
+                <p><a href="{% url "traveller.views.register" %}">>>快加入我们吧</a></p>
+            </div>
+            {% endif %}
+        </div>
+        {{ form.non_field_errors }}
+        {% csrf_token %} 
+        {% for field in form %}
+        <div>           
+            <p>{{ field.label_tag }}:</p>
+            {{ field }} {{ field.errors }}
+        </div>
+        {% endfor %}
+        <div><input type="submit" value="登录" class="btn"/></div>
+    </fieldset>
+</form>
+
+{% endblock %}  
+
+

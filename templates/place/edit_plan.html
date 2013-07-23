@@ -1,0 +1,515 @@
+{% extends "base.html" %}  
+
+{% block title %} 编辑旅程 {% endblock %} 
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/edit_plan.css" />
+{% endblock %}
+
+{% block main %} 
+
+<div id="edit-plan-main" class="clearfix">
+    <div id="edit-plan-main-left">
+        <div id="edit-plan-main-search-wrapper">
+            <a href="{% url "place.views.edit_plan_search" %}" id="edit-plan-main-search" ></a>
+            <input type="text" placeholder="景点、旅馆、餐馆、城市、国家" size="30" id="edit-plan-main-input" >
+        </div>
+
+        <div id="edit-plan-main-search-result">
+            <div id="edit-plan-main-search-result-frame1"></div>
+            <div id="edit-plan-main-search-result-frame2"></div>
+            <div id="edit-plan-main-search-result-header">
+                <img id="edit-plan-main-search-place-img" src="/media/place/100000.jpg" class="photo-image-small fl">
+                <div class="fl" id="edit-plan-main-search-place-name-wrapper"><span id="edit-plan-main-search-place-name">世界</span></div>
+                <a title="将此地点加入我的旅程" id="edit-plan-add-play" data-id="100000" href="{% url "place.views.add_play" plan.id %}"></a>
+            </div>
+            <div id="edit-plan-main-search-result-detail">
+                <p id="edit-plan-main-search-place-description">地球，人类的居住地，目前已知的惟一仍然拥有生命存在的地方。</p>
+            </div>
+        </div>
+
+        <div id="edit-plan-main-search-results">
+            <div class="edit-plan-main-search-results-result clearfix none">
+                <a href="">
+                    <img src="" class="photo-image-small fl">
+                    <div class="fl"><span></span></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-plan-main-right">
+        <div id="map-wrapper" class="w clearfix">
+            <div id="map-canvas"></div>
+            <div id="map-controller">    
+                <a href="javascript:void(0);" id="map-prev" class="fl"></a>
+                <a href="javascript:void(0);" id="map-home" class="fl"></a>
+                <a href="javascript:void(0);" id="map-next" class="fr"></a>
+            </div>
+    </div>
+    </div>
+</div>
+
+
+
+<div id="edit-plan-plays" class="clearfix">
+
+    <div id="edit-plan-plays-header">
+        <h2>我的行程</h2>
+    </div>
+
+    <div id="edit-plan-plays-main" class="clearfix">
+
+        <div class="edit-plan-route none fl">          
+            <a href="" class="edit-plan-edit-route fancybox fancybox.iframe">
+                <div title="未知" class="transportation7"></div>
+            </a>
+            <div class="edit-plan-plays-main-line"></div>
+        </div>
+        
+        <div class="edit-plan-play none fl">
+            <div class="photo-wrapper">
+                <a class="edit-plan-del-play photo-del none" href=""></a>
+                <a class="edit-plan-edit-play fancybox fancybox.iframe photo-image" href="">
+                    <img src="">
+                </a>
+            </div>
+            <h4></h4>
+        </div> 
+
+        {% for play in plays %}
+
+        {% ifnotequal forloop.counter 1 %}
+        <div class="edit-plan-route fl">          
+            <a href="{% url "place.views.edit_route" play.prev.id %}" class="edit-plan-edit-route fancybox fancybox.iframe">
+                <div title="{{play.prev.transportation_name}}" class="transportation{{play.prev.transportation}}"></div>
+            </a>
+            <div class="edit-plan-plays-main-line"></div>
+        </div>
+        {% endifnotequal %}
+
+        <div class="edit-plan-play fl" data-id="{{play.id}}">
+            <div class="photo-wrapper">
+                <a class="edit-plan-del-play photo-del none" href="{% url "place.views.del_play" play.id %}"></a>
+                <a class="edit-plan-edit-play fancybox fancybox.iframe photo-image" href="{% url "place.views.edit_play" play.id %}">
+                    <img src="/media/place/{% if play.place.has_img %}{{play.place.id}}{% else %}default{% endif %}.jpg">
+                </a>
+            </div>
+            <h4>{{play.place}}</h4>
+        </div> 
+
+        {% endfor %} 
+    </div> 
+    
+    <div id="edit-plan-plays-footer">
+        <a id="edit-plan-save" class="btn fr">完成编辑</a>
+    </div>
+    
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBcZwuumv4nlBiwv44ShGcVrqDH6UhDXfo&sensor=false&language=zh-CN"></script>
+<script type="text/javascript" src="/static/js/util.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript">
+//搜索
+function search(){
+    var input = $('#edit-plan-main-input').val();
+    if(input.length==0){alert(">.< 你还没输入呢！");}
+    $.ajax({ 
+        data: {"q":input},
+        type: "GET", 
+        url: $('#edit-plan-main-search').attr('href'), 
+        success: function(response) { 
+            if(response.results){               
+                $('.edit-plan-main-search-results-result').not(".none").remove();
+                for(var i=0;i<response.results.length;i++){
+                    var newNode = $('.edit-plan-main-search-results-result').eq(0).clone(true).removeClass("none");
+                    newNode.find('a span').html(response.results[i].name);
+                    newNode.find('a').data('id',response.results[i].id);
+                    newNode.find('a').data('description',response.results[i].description);
+                    newNode.find('a').data('parent_struct',response.results[i].parent_struct);
+                    newNode.find('a img').attr("src","/media/place/"+(response.results[i].has_img?response.results[i].id:"default")+".jpg/")
+                    $('#edit-plan-main-search-results').append(newNode);
+                }
+                $('#edit-plan-main-search-result').addClass("none");
+                $('#edit-plan-main-search-results').removeClass('none');
+            }else{
+                alert(">.< 找不到您要去的地方哦,修改搜索条件再试试?");
+            }   
+        }
+    });
+}
+$('#edit-plan-main-input').bind('keyup',function(event) {  
+    if(event.keyCode==13){  
+        search();
+    }  
+});  
+
+$("#edit-plan-main-search-place-name-wrapper").draggable({
+	cursor: "move", 
+	revert: "invalid",
+	snap: "#super-frame",
+	snapMode: "outer",
+	helper: "clone"
+});
+$("#edit-plan-main-search-place-img").draggable({
+	cursor: "move", 
+	revert: "invalid",
+	snap: "#super-frame",
+	snapMode: "outer",
+	helper: "clone"
+});
+$("#edit-plan-plays").droppable({
+	drop: function(event,ui){
+		var drag = ui.draggable;
+		var place_img = $("#edit-plan-main-search-place-img");
+		var place_name = $("#edit-plan-main-search-place-name-wrapper");
+		switch(drag.attr("id")){
+			case place_name.attr("id"):
+			case place_img.attr("id"):
+				$("#edit-plan-add-play").click();
+				break;	
+		}
+	}
+});
+
+$('#edit-plan-main-search').click(function(){
+    search();
+    return false;
+});
+//选中搜索项
+$('.edit-plan-main-search-results-result a').click(function(){
+    $('#edit-plan-main-input').val('');
+    $('#edit-plan-main-search-place-name').html($(this).find('span').html());
+    $('#edit-plan-main-search-place-description').html($(this).data('description'));
+    $('#edit-plan-main-search-place-img').attr("src",$(this).find('img').attr("src"));
+    $('#edit-plan-add-play').data("id",$(this).data('id'));
+    $('#edit-plan-main-search-results').addClass('none');
+    $('#edit-plan-main-search-result').removeClass("none");
+	map_show_place($(this).data("parent_struct"));
+    return false;
+});
+//加新的play
+$('#edit-plan-add-play').click(function(){
+    var id = $(this).data("id");
+    $.ajax({ 
+        data: {"id":id},
+        type: "POST", 
+        url: $(this).attr('href'), 
+        success: function(response) { 
+            if(response.result){
+                //加新的route节点
+                if(response.result.route_id){
+                    var newNode1 = $('.edit-plan-route').eq(0).clone(true).removeClass("none");
+                    newNode1.find('.edit-plan-edit-route').attr('href',"/place/edit_route/"+response.result.route_id+"/");
+                    $('#edit-plan-plays-main').append(newNode1); 
+                }               
+                //加新的play节点
+                var newNode = $('.edit-plan-play').eq(0).clone(true).removeClass("none");
+                newNode.find('h4').eq(0).html(response.result.name);
+                newNode.find('.edit-plan-edit-play').attr("href","/place/edit_play/"+response.result.id+"/");
+                newNode.find('.edit-plan-del-play').attr("href","/place/del_play/"+response.result.id+"/");
+                newNode.find('.photo-image img').attr("src",$('#edit-plan-main-search-place-img').attr("src"));  
+                newNode.data('id',response.result.id);         
+                $('#edit-plan-plays-main').append(newNode);
+				map_add_place_plan(response.result.parent_struct,response.result.id,marker_list.length);
+            }else{
+                alert("这地方已经在你的计划中了吧 =.=");
+            }   
+        }
+    });
+    return false;
+});
+//删除play
+$(".edit-plan-del-play").click(function(){
+    var del_next = false;
+    var msg = "您真的确定要删除吗？"; 
+    if (!confirm(msg)){ 
+        return false;
+    }
+    var clicked = $(this);
+    //如果是第一个且有后继，删掉后继路线
+    if(clicked.parent().parent()[0]===$('.edit-plan-play')[1]&&$('.edit-plan-play').length>2){
+        $.ajax({ 
+            async: false,
+            type: "POST", 
+            url: clicked.parent().parent().next().find('.edit-plan-edit-route').attr('href').replace('edit','del'),
+            success: function(response) {
+                if(response.success){
+                    del_next = true;  
+                }
+            }
+        });      
+    }
+    $.ajax({ 
+        type: "POST", 
+        url: $(this).attr('href'), 
+        success: function(response) {  
+            if(response.success){
+                //如果有prev路线，删掉
+                if(response.has_prev){
+                    clicked.parent().parent().prev().remove();
+                }
+                //如果是第一个且有后继，删掉后继路线
+                if(del_next){
+                    clicked.parent().parent().next().remove(); 
+                }
+                //删除节点本身
+                clicked.parent().parent().remove();
+				console.log(response);
+				map_del_place_plan(response.play_id);
+            }
+			
+        }
+    });
+    return false;
+});
+//变更交通方式
+function refreshRoute(id,transportation,transportation_name){
+    $('a[href="/place/edit_route/'+id+'/"]').find('div').attr('title',transportation_name);
+    $('a[href="/place/edit_route/'+id+'/"]').find('div').attr('class','transportation'+transportation);
+}
+//保存
+$("#edit-plan-save").click(function(){  
+    //跳转至view_plan
+    location.href="/place/plan/{{plan.id}}";  
+    return false;
+});
+</script>
+
+
+<script type="text/javascript">
+		function parent_struct2string(parent_struct){
+				console.log(parent_struct);
+				var struct_string = "";
+				if (parent_struct[0]["chinese_name"]) {
+						for (i in parent_struct) {
+							struct_string += parent_struct[i]["chinese_name"]+",";
+						}
+				}
+				else {
+						for (i in parent_struct) {
+							struct_string += parent_struct[i]["english_name"]+",";
+						}
+				
+				}
+				return struct_string;
+		}
+
+function map_show_place(place_struct) {
+		var place_path = unescape_text(parent_struct2string(place_struct));
+		var latlng = getLatLng(place_path);
+		marker_new = new google.maps.Marker({
+				position: new google.maps.LatLng(latlng.lat,latlng.lng),
+				latlng:latlng
+				});
+		marker_new.setMap(map);
+		map.fitBounds(marker_new.latlng.bounds);
+		var infowindow_content_new = place_struct[0]['chinese_name'] + " " + place_struct[0]['english_name'];
+		google.maps.event.addListener(marker_new,'click',function(){
+						infowindow.setContent(infowindow_content_new);
+						infowindow.open(map,marker_new);
+						});
+}
+function map_add_place_plan(place_struct,play_id,position) {
+	console.log('add');
+	mapClean();
+	var place_path = unescape_text(parent_struct2string(place_struct));
+	var latlng = getLatLng(place_path);
+	mapClean();
+	insertArray(route_path,position,(new google.maps.LatLng(latlng.lat,latlng.lng)));
+	insertArray(data_id_list,position,play_id);
+	var marker = new google.maps.Marker({
+					position: new google.maps.LatLng(latlng.lat,latlng.lng),
+					title:place_struct[0].chinese_name+" "+place_struct[0].english_name,
+					latlng: latlng,
+					});
+	insertArray(marker_list,position,marker);
+	var infowindow_content = place_struct[0]["chinese_name"] + " " + place_struct[0]['english_name'];
+	insertArray(infowindow_content_list,position,infowindow_content);
+	marker_new.setMap(null);
+	mapRedraw();
+}
+function map_del_place_plan(play_id) {
+	console.log('del');
+	mapClean();
+	for (var i=0; i<data_id_list.length; i++) {
+			if ( data_id_list[i] == play_id) {
+				removeArray(data_id_list,i);
+				removeArray(marker_list,i);
+				removeArray(route_path,i);
+				removeArray(infowindow_content_list,i);
+				mapRedraw();
+				return;
+			}
+	}
+	console.log("del error");
+
+}
+function mapClean() {
+	bounds = new google.maps.LatLngBounds();
+	for (var i=0; i<marker_list.length; i++) {
+		marker_list[i].setMap(null);
+	}
+}
+function mapRedraw() {
+	if (marker_list.length == 0) {
+			map_show_place([{chinese_name:"世界",english_name:"World"}]);
+	} else if (marker_list.length == 1){
+			marker_list[0].setIcon("/static/icon/marker_icon/number_1.png");
+			marker_list[0].setMap(map);
+			bounds = marker_list[0].latlng.bounds;
+			(function (cur_marker,cur_infowindow_content) {
+		 		 google.maps.event.addListener(cur_marker,'click',function() {
+				 infowindow.setContent("第1站：" + cur_infowindow_content);
+				 infowindow.open(map,cur_marker);
+				 });
+		 })(marker_list[0],infowindow_content_list[0]);
+		map.fitBounds(bounds);
+	} else{
+	for ( var i=0; i<marker_list.length;i++){
+		marker_list[i].setIcon("/static/icon/marker_icon/number_"+(i+1)+".png");
+		marker_list[i].setMap(map);
+		bounds.extend(marker_list[i].position);
+		(function (i,cur_marker,cur_infowindow_content) {
+		 google.maps.event.addListener(cur_marker,'click',function() {
+				 infowindow.setContent("第"+ (i+1) + "站：" + cur_infowindow_content);
+				 infowindow.open(map,cur_marker);
+				 });
+		 })(i,marker_list[i],infowindow_content_list[i]);
+	}
+	map.fitBounds(bounds);
+	}
+}
+function mapsinit() {
+		map = new google.maps.Map(document.getElementById('map-canvas'),{
+				minZoom:1,
+				zoom:1,
+				center: new google.maps.LatLng(50, 0),
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+		});
+		bounds = new google.maps.LatLngBounds();
+		route_path = [];
+		marker_new = new google.maps.Marker();
+		var place_path = "";
+		marker_list = [];
+		infowindow_content_list=[];
+		data_id_list = [];
+		infowindow = new google.maps.InfoWindow();
+		mapClean();
+		{% for play in plays %}
+			place_path = "";
+			{% if play.place.chinese_name|length != 0 %}
+				{% for i in play.place.parent_struct %}
+					place_path = place_path + "{{i.chinese_name}},";
+				{% endfor %}
+			{% else %}
+				{% for i in play.place.parent_struct %}
+					place_path = place_path + "{{i.english_name}},";
+				{% endfor %}
+			place_path = unescape_text(place_path);
+			{% endif %}
+			data_id_list.push({{play.id}});
+			try{
+				console.log(place_path);
+				var latlng = getLatLng(place_path);
+				var marker = new google.maps.Marker({
+						position: new google.maps.LatLng(latlng.lat,latlng.lng),
+						title:"{{ play.place.chinese_name }} {{play.place.english_name}}",
+						latlng: latlng,
+						});
+				marker_list.push(marker);
+				var infowindow_content = ["{{play.place.chinese_name}} {{play.place.english_name}}",
+				latlng.lat+","+latlng.lng].join('<br />');
+				infowindow_content_list.push(infowindow_content);
+				route_path.push(new google.maps.LatLng(latlng.lat,latlng.lng));
+
+			} catch(errObj) {
+					if (errObj.errMsg=="PlaceNotFound") {
+						console.log("Place Not Found of "+place_path);
+					}
+			}
+		{% endfor %}
+		
+
+		var lineSymbol = {
+			path:'M 0,-1 0,1',
+			scale:4,
+			strokeOpacity:0.8,
+			strokeColor: '#393'
+		};
+		var routes_path_line = new google.maps.Polyline({
+				path: route_path,
+				strokeColor:"#FF0000",
+				strokeOpacity:0,
+				strokeWeight:2,
+				icons:[{
+					icon:lineSymbol,
+					offset:'0',
+					repeat: '20px'
+				}],
+				});
+		routes_path_line.setMap(map);
+		console.log(route_path);
+		var current_marker = 0;
+		$('#map-prev').click(function(){
+						console.log('prev');
+						current_marker--;
+						if (current_marker < 1){
+							current_marker = marker_list.length;
+						}
+						display_marker_route(current_marker);
+						});
+		$('#map-next').click(function(){
+						console.log('next');
+						console.log(marker_list.length);
+						current_marker++;
+						if (current_marker > marker_list.length){
+							current_marker = 1;
+						}
+						display_marker_route(current_marker);
+						});
+		$('#map-home').click(function() {
+						console.log('home');
+						current_marker = 0;
+						if (infowindow) {
+							infowindow.close();
+						}
+						map.fitBounds(bounds);
+						});
+		function display_marker_route(current_marker_number) {
+				for (tmp_marker in marker_list) {
+					marker_list[tmp_marker].setZIndex(1);
+				}
+				console.log(current_marker_number);
+				var cur_marker = marker_list[current_marker_number-1];
+				var cur_infowindow_content = infowindow_content_list[current_marker_number-1];
+				infowindow.setContent("第"+ current_marker_number + "站：" + cur_infowindow_content);
+				infowindow.open(map,cur_marker);
+				cur_marker.setZIndex(100);
+				map.fitBounds(cur_marker.latlng.bounds);
+		}
+		function animateCircle() {
+			var count = 0;
+			offsetId = window.setInterval(function(){
+							count = (count+1)%200;
+							var icons = routes_path_line.get('icons');
+							icons[0].offset = (count/5)+'px';
+							routes_path_line.set('icons',icons);
+							},20);
+		}
+		animateCircle();
+		mapRedraw();
+}
+google.maps.event.addDomListener(window,'load',mapsinit);
+</script>
+
+{% endblock %}
+
+
+
+

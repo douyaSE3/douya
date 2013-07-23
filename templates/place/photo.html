@@ -1,0 +1,45 @@
+{% extends "iframe_base.html" %}  
+
+{% block main %}
+<form action="#" method="post" enctype="multipart/form-data">
+    <fieldset>
+        <legend>照片</legend>
+        {{ form.non_field_errors }}
+        {% csrf_token %} 
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+        <div class="form-item">
+            {{ field.label_tag }} {{ field }} {{ field.errors }} 
+        </div>
+        {% endfor %}
+        <div class="form-item"><a id="submit" class="btn">保存</a></div>
+    </fieldset>
+</form>
+{% endblock %}  
+
+{% block js %}
+<script type="text/javascript">
+$("#submit").click(function(){  
+    var formData = new FormData($('form')[0]);
+    $.ajax({ 
+        data: formData,
+        type: $('form').attr('method'), 
+        url: $('form').attr('action'), 
+        enctype: $('form').attr('enctype'),
+        success: function(response) { 
+            if(response.success){
+                parent.location.reload();   
+                parent.$.fancybox.close();
+            }else{
+                $("body").html(response); 
+            }   
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}); 
+</script>
+{% endblock %}

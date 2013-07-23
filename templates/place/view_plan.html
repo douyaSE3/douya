@@ -1,0 +1,266 @@
+{% extends "base.html" %}  
+
+{% block title %} 你的旅程 {% endblock %} 
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/view_plan.css" />
+{% endblock %}
+
+{% block main-left %}   
+
+<div id="view-plan-top" class="clearfix">
+    <a href="{% url "traveller.views.traveller_index" plan.user.id %}" class="portrait fl" >
+        <img src="/media/{{plan.user.profile.portrait|default:"portrait/default.jpg" }}">
+    </a>
+    <div id="view-plan-top-center" class="fl">
+        <h1>{{plan.title}}</h1>
+        <span>来自：<a href="{% url "traveller.views.traveller_index" plan.user.id %}">{{plan.user}}</a>({{plan.user.first_name}}{{plan.user.last_name}})</span>
+    </div>
+    <div id="view-plan-top-right" class="fr">
+    {% if request.user.is_authenticated %} 
+    {% ifequal plan.user.id request.user.id %}
+        <a href="{% url "place.views.edit_plan" plan.id %}" class="btn">编辑旅程</a>
+    {% else %}
+        <a href="{% url "place.views.copy_plan" plan.id %}" class="fancybox fancybox.iframe btn">复制Ta的旅程</a>
+    {% endifequal %}
+    {% endif %}
+    </div>
+</div>
+
+<div id="map-wrapper" class="w clearfix">
+    <div id="map-canvas"></div>
+    <div id="map-controller">    
+        <a href="javascript:void(0);" id="map-prev" class="fl"></a>
+        <a href="javascript:void(0);" id="map-home" class="fl"></a>
+        <a href="javascript:void(0);" id="map-next" class="fr"></a>
+    </div>
+</div>
+
+<div id="view-plan-plays">
+{% for play in plays %}
+
+    <div class="view-plan-play clearfix">
+
+        {% if play.prev %}
+        <div class="view-plan-route">           
+            <div class="view-plan-route-detail none">
+                <div class="view-plan-route-detail-content">   
+                    <div class="view-plan-route-detail-close fr"></div>
+                    <p>交通方式：{{play.prev.transportation_name}}</p>
+                    <p>出发时间：{{play.prev.begin_time|date:"Y-m-d H:i"|default:"未知"}}</p>
+                    <p>结束时间：{{play.prev.end_time|date:"Y-m-d H:i"|default:"未知"}}</p>
+                    <p>预计花销：{{play.prev.cost}}</p>
+                    <p>Ta的附注：{{play.prev.tips|default:"尚无"}}</p>
+                </div>
+                <div class="view-plan-route-detail-footer"></div>
+            </div>
+            {% ifnotequal play.prev.transportation 7 %}
+            <div title="{{play.prev.transportation_name}}" class="transportation{{play.prev.transportation}}"></div>
+            {% endifnotequal %}
+        </div>
+        {% endif %}
+
+        <div class="view-plan-play-left fl">
+            <div class="view-plan-play-left-content bc">第{{ forloop.counter }}站</div>
+        </div>
+        <div class="view-plan-play-right fr">
+            <div class="fr">
+                <div class="view-plan-play-right-cost">￥{{play.cost}}</div>
+                <div class="view-plan-play-right-arrow fr"></div>
+            </div>
+            <a href="{% url "place.views.place_intro" play.place.id %}" class="view-plan-play-right-name">{{play.place}}</a>
+            <p class="view-plan-play-right-time">
+                {{play.begin_time|date:"Y-m-d H:i"}}
+                {% if play.begin_time and play.end_time %}<span class="view-plan-play-right-time-arrow"></span>{% endif %}
+                {{play.end_time|date:"Y-m-d H:i"}}
+            </p>
+            <p class="view-plan-play-right-tips">{{play.tips}}</p>
+        </div>
+
+    </div>
+
+{% endfor %}
+</div>
+
+{% endblock %}  
+
+{% block main-right %} 
+
+<div id="view-plan-photos" class="clearfix">
+    {% ifequal plan.user.id request.user.id %}
+    <a class="fancybox fancybox.iframe fr" href="{% url "place.views.add_photo" plan.id %}" >上传照片</a>
+    {% endifequal %}
+
+    <h2>旅途瞬间</h2>
+
+    {% for photo in photos %}
+    <div class="photo-wrapper">
+        {% ifequal plan.user.id request.user.id %}
+        <a class="photo-del none" href="{% url "place.views.del_photo" photo.id %}"></a>
+        {% endifequal %}
+        <a class="fancybox fancybox.image photo-image" href="/media/{{photo.image}}"><img src="/media/{{photo.image}}"></a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}  
+
+{% block js %}
+<script type="text/javascript">
+//关闭route的详细信息
+$('body').click(function(){
+    $('.view-plan-route-detail').not('.none').addClass('none');
+});
+$('.view-plan-route-detail-close').click(function(){
+    $(this).parent().parent().eq(0).addClass('none');
+    return false;
+});
+//打开route的详细信息
+$('.view-plan-route').click(function(){
+    $(this).find('.view-plan-route-detail').removeClass('none');
+    return false;
+})
+$(".photo-del").click(function(){
+    var msg = "您真的确定要删除吗？"; 
+    if (!confirm(msg)){ 
+        return false;
+    }  
+    $.ajax({ 
+        url: $(this).attr('href'), 
+        success: function(response) { 
+            if(response.success){
+                location.reload();   
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+    return false;
+});
+</script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBcZwuumv4nlBiwv44ShGcVrqDH6UhDXfo&sensor=false&language=zh-CN"></script>
+<script type="text/javascript" src="/static/js/util.js"></script>
+<script type="text/javascript">
+
+function mapsinit() {
+		var map = new google.maps.Map(document.getElementById('map-canvas'),{
+				minZoom:1,
+				zoom:1,
+				center: new google.maps.LatLng(50, 0),
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+		});
+		var bounds = new google.maps.LatLngBounds();
+		var route_path = [];
+		var max_marker;
+		{% for play in plays %}
+			var place_path = "";
+			{% if play.place.chinese_name|length != 0 %}
+				{% for i in play.place.parent_struct %}
+					place_path = place_path + "{{i.chinese_name}},";
+				{% endfor %}
+			{% else %}
+				{% for i in play.place.parent_struct %}
+					place_path = place_path + "{{i.english_name}},";
+				{% endfor %}
+			place_path = unescape_text(place_path);
+			{% endif %}
+			try{
+				var latlng = getLatLng(place_path);
+				var marker{{forloop.counter}} = new google.maps.Marker({
+						position: new google.maps.LatLng(latlng.lat,latlng.lng),
+						title:"{{ play.place.chinese_name }} {{play.place.english_name}}",
+						latlng: latlng,
+						icon:'/static/icon/marker_icon/number_{{forloop.counter}}.png'
+						});
+				marker{{forloop.counter}}.setMap(map);
+				bounds.extend(marker{{forloop.counter}}.position);
+				var infowindow = new google.maps.InfoWindow();
+				var infowindow_content{{forloop.counter}} = ["第{{forloop.counter}}站：{{play.place.chinese_name}} {{play.place.english_name}}",
+					latlng.lat+","+latlng.lng].join('<br />');
+				route_path.push(new google.maps.LatLng(latlng.lat,latlng.lng));
+				google.maps.event.addListener(marker{{forloop.counter}},'click',function(){
+								infowindow.setContent(infowindow_content{{forloop.counter}});
+								infowindow.open(map,marker{{forloop.counter}});
+								});
+				max_marker = {{forloop.counter}};
+
+			} catch(errObj) {
+					if (errObj.errMsg=="PlaceNotFound") {
+						console.log("Place Not Found of "+place_path);
+					}
+			}
+		{% endfor %}
+		var lineSymbol = {
+			path:'M 0,-1 0,1',
+			scale:4,
+			strokeOpacity:0.8,
+			strokeColor: '#393'
+		};
+		var routes_path_line = new google.maps.Polyline({
+				path: route_path,
+				strokeColor:"#FF0000",
+				strokeOpacity:0,
+				strokeWeight:2,
+				icons:[{
+					icon:lineSymbol,
+					offset:'0',
+					repeat: '20px'
+				}],
+				});
+		routes_path_line.setMap(map);
+		
+		map.fitBounds(bounds);
+		var current_marker = 0;
+		$('#map-prev').click(function(){
+						console.log('prev');
+						current_marker--;
+						if (current_marker < 1){
+							current_marker = max_marker;
+						}
+						display_marker_route(current_marker);
+						});
+		$('#map-next').click(function(){
+						console.log('next');
+						console.log(current_marker);
+						console.log(max_marker);
+						current_marker++;
+						if (current_marker > max_marker){
+							current_marker = 1;
+						}
+						display_marker_route(current_marker);
+						});
+		$('#map-home').click(function() {
+						console.log('home');
+						current_marker = 0;
+						if (infowindow) {
+							infowindow.close();
+						}
+						map.fitBounds(bounds);
+						});
+		function display_marker_route(current_marker_number) {
+				for (tmp_marker in marker_list) {
+					marker_list[tmp_marker].setZIndex(1);
+				}
+				var cur_marker = eval("marker"+current_marker_number);
+				var cur_infowindow_content = eval("infowindow_content"+current_marker_number);
+				infowindow.setContent(cur_infowindow_content);
+				infowindow.open(map,cur_marker);
+				cur_marker.setZIndex(100);
+				map.fitBounds(cur_marker.latlng.bounds);
+		}
+		function animateCircle() {
+			var count = 0;
+			offsetId = window.setInterval(function(){
+							count = (count+1)%200;
+							var icons = routes_path_line.get('icons');
+							icons[0].offset = (count/5)+'px';
+							routes_path_line.set('icons',icons);
+							},20);
+		}
+		animateCircle();
+}
+google.maps.event.addDomListener(window,'load',mapsinit);
+</script>
+{% endblock %}
+

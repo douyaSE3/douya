@@ -1,0 +1,174 @@
+#index-search-wrapper {
+  position: absolute;
+  left: 290px;
+  z-index: 999;
+  width: 380px;
+  height: 50px;
+  background: rgba(211, 211, 211, 0.4);
+  border-radius: 22px;
+  -o-border-radius: 22px;
+  -moz-border-radius: 22px;
+  -webkit-border-radius: 22px;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); }
+  #index-search-wrapper #index-search {
+    background: #fff;
+    width: 354px;
+    height: 26px;
+    line-height: 26px;
+    position: relative;
+    left: 6px;
+    top: 5px;
+    border-radius: 16px;
+    -o-border-radius: 22px;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    padding: 4px;
+    border: 3px solid rgba(162, 163, 162, 0.47); }
+    #index-search-wrapper #index-search input[type=text] {
+      outline: none;
+      border: none;
+      width: 310px;
+      height: 30px;
+      font-size: 18px;
+      margin-left: 20px;
+      position: relative;
+      color: #787a78;
+      display: inline-block;
+      top: -2px;
+      left: -4px; }
+    #index-search-wrapper #index-search input[type=submit] {
+      border: none;
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      cursor: pointer;
+      top: 6px;
+      right: 10px;
+      background: url("../images/big-search.png") no-repeat center; }
+
+#index-wrapper {
+  width: 960px;
+  height: 460px;
+  padding: 10px;
+  background: rgba(222, 222, 222, 0.4);
+  position: relative;
+  top: 20px;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  box-shadow: 1px 2px 3px rgba(121, 121, 121, 0.4);
+  -moz-box-shadow: 1px 2px 3px rgba(121, 121, 121, 0.4);
+  -webkit-box-shadow: 1px 2px 3px rgba(121, 121, 121, 0.4); }
+  #index-wrapper #index {
+    overflow: hidden;
+    width: 957px;
+    height: 460px;
+    position: relative;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0 2px 3px rgba(121, 121, 121, 0.4);
+    -moz-box-shadow: 0 2px 3px rgba(121, 121, 121, 0.4);
+    -webkit-box-shadow: 0 2px 3px rgba(121, 121, 121, 0.4); }
+    #index-wrapper #index #index-prev {
+      width: 43px;
+      height: 90px;
+      cursor: pointer;
+      position: absolute;
+      top: 180px;
+      z-index: 999;
+      left: 20px;
+      background: url("../images/index-left.png") no-repeat center; }
+      #index-wrapper #index #index-prev:hover {
+        background: url("../images/index-left-hover.png") no-repeat center; }
+    #index-wrapper #index #index-next {
+      width: 43px;
+      height: 90px;
+      cursor: pointer;
+      position: absolute;
+      top: 180px;
+      z-index: 999;
+      right: 20px;
+      background: url("../images/index-right.png") no-repeat center; }
+      #index-wrapper #index #index-next:hover {
+        background: url("../images/index-right-hover.png") no-repeat center; }
+    #index-wrapper #index ul {
+      width: 5000px;
+      position: relative;
+      left: -1920px; }
+      #index-wrapper #index ul li {
+        display: inline-block;
+        margin-left: -3px; }
+        #index-wrapper #index ul li img {
+          width: 960px;
+          height: 460px; }
+    #index-wrapper #index #index-map {
+      width: 660px;
+      height: 383px;
+      position: absolute;
+      bottom: 22px;
+      left: 150px;
+      z-index: 5;
+      background: url("../images/map.png") no-repeat center; }
+      #index-wrapper #index #index-map .index-map-item {
+        display: block;
+        position: absolute;
+        width: 46px;
+        height: 18px; }
+        #index-wrapper #index #index-map .index-map-item:hover {
+          background: rgba(255, 255, 255, 0.5); }
+        #index-wrapper #index #index-map .index-map-item#asia {
+          top: 143px;
+          left: 422px; }
+        #index-wrapper #index #index-map .index-map-item#africa {
+          top: 187px;
+          left: 299px; }
+        #index-wrapper #index #index-map .index-map-item#europe {
+          top: 108px;
+          left: 343px; }
+        #index-wrapper #index #index-map .index-map-item#oceania {
+          top: 259px;
+          left: 507px;
+          width: 62px; }
+        #index-wrapper #index #index-map .index-map-item#southamerica {
+          top: 232px;
+          left: 182px; }
+        #index-wrapper #index #index-map .index-map-item#northamerica {
+          top: 138px;
+          left: 104px; }
+        #index-wrapper #index #index-map .index-map-item#antarctica {
+          top: 355px;
+          left: 352px; }
+      #index-wrapper #index #index-map .index-map-detail {
+        left: 80px;
+        top: 32px;
+        padding: 10px;
+        border: 1px solid #d7d7d7;
+        background-color: rgba(255, 255, 255, 0.8);
+        width: 500px;
+        height: 300px;
+        position: absolute;
+        box-shadow: 0 0 3px rgba(200, 200, 200, 0.5);
+        -moz-box-shadow: 0 0 3px rgba(200, 200, 200, 0.5);
+        -webkit-box-shadow: 0 0 3px rgba(200, 200, 200, 0.5); }
+        #index-wrapper #index #index-map .index-map-detail .close {
+          width: 26px;
+          height: 26px;
+          background: url("../images/close.png");
+          cursor: pointer; }
+          #index-wrapper #index #index-map .index-map-detail .close:hover {
+            background: url("../images/close.png") 0 -26px; }
+        #index-wrapper #index #index-map .index-map-detail h2 {
+          border-bottom: 1px solid #c2c2c2;
+          padding-bottom: 12px;
+          margin-bottom: 8px;
+          font-weight: bold; }
+        #index-wrapper #index #index-map .index-map-detail p {
+          line-height: 32px; }
+          #index-wrapper #index #index-map .index-map-detail p .country {
+            font-weight: bold;
+            margin-right: 26px; }
+          #index-wrapper #index #index-map .index-map-detail p a {
+            margin-right: 8px; }

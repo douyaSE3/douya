@@ -1,0 +1,36 @@
+{% extends "base.html" %}  
+
+{% block title %}  用户信息  {% endblock %} 
+
+{% block main-left %} 
+<h1 class="mb20">欢迎来到豆芽旅行~</h1>
+<form id="info-form" class="w400" action="#" method="post" enctype="multipart/form-data">
+    <fieldset>
+        <legend>用户信息</legend>
+        <div class="lab">
+            {% if request.user.is_authenticated %}
+            <h2 class="fl">个人信息</h2>
+            {% else %}
+            <h2 class="fl">注册</h2>
+            <div class="fr">
+                <span class="m10">>>已经有账号??</span>
+                <p><a href="{% url "traveller.views.login_view" %}">>>点此登录</a></p>
+            </div> 
+            {% endif %}
+        </div>
+        {{ form.non_field_errors }}
+        {% csrf_token %} 
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+        <div>
+            <p>{{ field.label_tag }}:</p>
+            {{ field }} {{ field.errors }} 
+        </div>
+        {% endfor %}
+        <div><input type="submit" value="提交" class="btn"/></div>
+    </fieldset>
+</form>
+{% endblock %}  
+

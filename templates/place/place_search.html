@@ -1,0 +1,79 @@
+{% extends "base.html" %}  
+
+{% block title %} 搜索结果 {% endblock %} 
+{% block css %} <link rel="stylesheet" href="/static/css/place_search.css"> {% endblock %}
+
+{% block main-left %}   
+<div class="place-search-title">
+	<h2>有关<span class="f20">"{{ search_string }}"</span>的搜索结果共有<span class="f20">{{ result_num }}</span>条:</h2>
+</div>
+{% for result in results %} 
+<div class="place-search-result">
+	<div class="place-search-result-l">
+		<a href="{% url "place.views.place_intro" result.place.id %}"><img src="/media/place/{% if result.place.has_img %}{{result.place.id}}{% else %}default{% endif %}.jpg" class="photo-image"></a>
+	</div>
+	<div class="place-search-result-r">
+		<h1><a href="{% url "place.views.place_intro" result.place.id %}">{{result.place.chinese_name}}{{result.place.english_name}}</a></h1>
+		<div class="place-search-result-r-comment">
+            评价:
+    		<span class="stars">
+                <span class="stars-off"><span class="stars-on" style="width:{% widthratio result.avg_of_rank 1 20 %}%"></span></span>
+            </span>
+            <div class="place-search-result-r-detail">
+        		<div class="rating-wrapper">
+        			<p>
+                        <span class="small-stars">
+                            <span class="small-stars-off"><span class="small-stars-on" style="width:100%"></span></span>
+                        </span>
+                        <span class="power" style="width:{{result.per_of_5star}}px"></span>
+                        <span class="power-num">{{result.per_of_5star|default:0}}%</span>
+                    </p>
+                    <p>
+                        <span class="small-stars">
+                            <span class="small-stars-off"><span class="small-stars-on" style="width:80%"></span></span>
+                        </span>
+                        <span class="power" style="width:{{result.per_of_4star}}px"></span>
+                        <span class="power-num">{{result.per_of_4star|default:0}}%</span>
+                    </p>
+                    <p>
+                        <span class="small-stars">
+                            <span class="small-stars-off"><span class="small-stars-on" style="width:60%"></span></span>
+                        </span>
+                        <span class="power" style="width:{{result.per_of_3star}}px"></span>
+                        <span class="power-num">{{result.per_of_3star|default:0}}%</span>
+                    </p>
+                    <p>
+                        <span class="small-stars">
+                            <span class="small-stars-off"><span class="small-stars-on" style="width:40%"></span></span>
+                        </span>
+                        <span class="power" style="width:{{result.per_of_2star}}px"></span>
+                        <span class="power-num">{{result.per_of_2star|default:0}}%</span>
+                    </p>
+                    <p>
+                        <span class="small-stars">
+                            <span class="small-stars-off"><span class="small-stars-on" style="width:20%"></span></span>
+                        </span>
+                        <span class="power" style="width:{{result.per_of_1star}}px"></span>
+                        <span class="power-num">{{result.per_of_1star|default:0}}%</span>
+                    </p> 
+        		</div>
+            </div>
+        </div>
+        <h6 id="place-intro-rela">{{result.want}}人想去,{{result.been}}人去过,{{result.being}}人在这儿</h6>
+	</div>
+</div>
+{% empty %}
+未找到相关的搜索结果,换个关键字试试吧
+{% endfor %}
+{% endblock %}  
+
+{% block js %}
+<script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+   $(".place-search-result-r-comment").mouseenter(function(){
+        $(this).children(".place-search-result-r-detail").fadeIn(50);
+   }).mouseleave(function(){
+        $(this).children(".place-search-result-r-detail").fadeOut(50);
+   }) 
+</script>
+{% endblock %}

@@ -1,0 +1,208 @@
+
+/*表单样式*/
+#info-form{
+    background-color:#F7F7F7;
+}
+    .lr-form{
+        width: 330px;
+    }
+    .addarticle-form{
+        width: 600px;
+    }
+        #info-form p{
+            font-size: 12px;color: #999;padding: 5px;
+        }
+        #info-form .lab{
+            font-size: 16px;padding: 5px;
+        }
+        #info-form input{
+            margin-top: 10px;margin-bottom: 10px;font-size: 16px;
+        }
+            #info-form input[type=text]{
+                border-style:solid;border-color:#ffcb5b;border-radius:2px;background-color: #EAEAEA;width:200px;height: 30px;
+            }
+            #info-form input[type=password]{
+                border-style:solid;border-color:#ffcb5b;border-radius:2px;background-color: #EAEAEA;width:200px;height: 30px;
+            }
+            #info-form input[type=submit]{
+                border: none;background-color: #ffcb5b;width: 100px;height: 30px;color:white;
+            }
+            #info-form input[type=submit]:hover{
+                background-color: rgb(255, 223, 157);
+            }
+        #info-form ul{
+            display: inline;
+        }
+            #info-form ul.errorlist{
+                color: red;font-size: 12px;
+            }
+        #info-form li{
+            display: inline;
+        }
+
+.play,.route{
+    margin-bottom: 5px;margin-top: 5px;
+}
+
+/*照片样式*/
+.photo-wrapper{
+    width: 100px;height: 100px;position: relative;padding: 5px;text-align: center;background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);-moz-box-shadow: 0 1px 3px rgba(0,0,0,.3);-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+    .photo-del{
+        position: absolute;top: 0;right: 0;width: 18px;height: 18px;background: url("../images/photo-del.png") 0 0 no-repeat;
+    }
+    .photo-del:hover{
+        background: url("../images/photo-del.png") -18px 0 no-repeat;
+    }
+    .photo-image{
+        width: 100px;height: 100px;
+    }
+        .photo-image img{
+            width: 100px;height: 100px;
+        }
+/*小照片*/
+.photo-image-small{
+    width: 50px;height: 50px;
+}
+    .photo-image-small img{
+        width: 50px;height: 50px;
+    }
+
+/*选项卡样式*/
+.tabs{
+    background:#ffcb5b;border-radius:4px;margin-top: 5px;margin-bottom:5px;padding-left: 5px;padding-top:5px;height: 24px;
+}
+    .tabs li{
+        display: inline;font-family: ;font-size: 16px;padding: 5px;color: white
+    }
+    .tabs a{
+        color:white;
+    }
+        .tabs a:hover{
+            background: rgb(255, 223, 157);
+        }
+            .tabs .on{
+                background: rgb(255, 223, 157);
+            }
+
+/*头像样式*/
+.portrait{
+    width: 48px;height: 48px;display: inline;
+}
+    .portrait img{
+        width: 48px;height: 48px;
+    }
+
+/*按钮样式*/
+.btn{
+    background: #358227;padding: 6px 24px;cursor: pointer;color: #cfe6cd;font-size: 16px;font-family: "Microsoft Yahei";
+    text-align: center;border: 1px solid #276b1a;border-bottom: #2e7620;border-top: #1f5e13;
+    text-shadow:0 1px 1px rgba(0,0,0,0.7);-webkit-box-shadow:0 1px 1px rgba(0,0,0,0.7);-moz-box-shadow:0 1px 1px rgba(0,0,0,0.7);
+    box-shadow:0 2px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(255,255,255,0.3) inset;
+    -webkit-box-shadow:0 2px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(255,255,255,0.3) inset;
+    -moz-box-shadow:0 2px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(255,255,255,0.3) inset;
+    border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px; 
+}
+.btn:active{
+    background: #286d1a;
+}
+
+/*地图样式*/
+#map-canvas{
+    height: 300px;
+}
+#map-controller{
+    margin-top: 5px;height: 28px;z-index: 1;position: relative;
+}
+    #map-prev,#map-next,#map-home{
+        text-align: center;width: 210px;height: 28px;
+    }
+    #map-prev{
+        background: #ffcb5b url("../images/map-prev.png") no-repeat center ;
+    }
+    #map-prev:hover{
+        background: rgb(255, 223, 157) url("../images/map-prev.png") no-repeat center ;
+    }
+    #map-next{
+        background: #ffcb5b url("../images/map-next.png") no-repeat center ;
+    }
+    #map-next:hover{
+        background: rgb(255, 223, 157) url("../images/map-next.png") no-repeat center ;
+    }
+    #map-home{
+        background: #ffcb5b url("../images/map-home.png") no-repeat center ;margin-left: 5px;
+    }
+    #map-home:hover{
+        background: rgb(255, 223, 157) url("../images/map-home.png") no-repeat center ;
+    }
+
+/*面包屑样式*/
+.crumbs li{
+    display: inline;position: relative;
+}   
+    .crumbs li a{
+        color: #369;
+    }
+    .crumbs .divider{
+        margin-left: 16px;margin-right: 16px;color: #999;
+    }
+
+.relationship{
+    margin:10px;padding: 5px;
+}
+    .relationship p{
+        margin: 10px;
+    }
+
+
+/*交通方式*/
+.transportation0{
+    width: 64px;height: 50px;background: url("../images/transportation-icons.png") -278px 0 no-repeat; 
+}
+.transportation1{
+    width: 64px;height: 50px;background: url("../images/transportation-icons.png") -276px -74px no-repeat; 
+}
+.transportation2{
+    width: 64px;height: 50px;background: url("../images/transportation-icons.png") -140px 0 no-repeat; 
+}
+.transportation3{
+    width: 64px;height: 50px;background: url("../images/transportation-icons.png") 0 0 no-repeat; 
+}
+.transportation4{
+    width: 64px;height: 50px;background: url("../images/transportation-icons.png") -334px 0 no-repeat; 
+}
+.transportation5{
+    width: 64px;height: 50px;background: url("../images/transportation-icons.png") -70px -74px no-repeat; 
+}
+.transportation6{
+    width: 64px;height: 50px;background: url("../images/transportation-icons.png") -208px -74px no-repeat; 
+}
+.transportation7{
+    width: 64px;height: 50px;background: url("../images/transportation-icons.png") -338px -74px no-repeat; 
+}
+.transportation7:hover{
+    background: url("../images/transportation-icons.png") -390px -74px no-repeat; 
+}
+
+.edit-route{
+    height: 135px;width: 80px;line-height: 135px;
+}
+
+#edit-plays{
+    height: 200px;
+}
+    .edit-play{
+        height: 135px;width: 135px;
+    }
+       
+
+.login-register{
+    margin-top:40px;float:right;width:150px;
+}
+.place-aside{
+    padding: 5px;
+}
+    .place-aside p{
+        margin: 5px;
+    }

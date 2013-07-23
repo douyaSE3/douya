@@ -1,0 +1,105 @@
+body {
+  position: relative;
+  width: 100%;
+  min-width: 960px;
+  min-height: 100%;
+  background-color: #ffffff;
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 12px; }
+
+#header {
+  min-width: 960px;
+  height: 60px;
+  top: 0;
+  background: #edf4ed; }
+
+#logo {
+  display: block;
+  width: 139px;
+  height: 27px;
+  margin-top: 12px;
+  background: url("../images/logo_new.png") no-repeat center left; }
+
+#nav {
+  margin-left: 40px;
+  margin-top: 22px; }
+
+#nav a {
+  color: #072;
+  font-size: 14px;
+  float: left;
+  margin-left: 20px;
+  margin-right: 20px; }
+
+#nav a:hover {
+  background-color: #072;
+  color: #fff; }
+
+#nav-user-info {
+  color: white; }
+
+#search {
+  height: 60px;
+  line-height: 60px;
+  margin-right: 50px;
+  display: block; }
+
+#search-text {
+  outline: 0 none;
+  width: 142px;
+  background: #fff;
+  margin: 0;
+  font-size: 12px;
+  height: 14px;
+  border: 0px;
+  float: left;
+  margin-top: 20px;
+  border-radius: 10px 0 0 10px;
+  padding: 4px 4px 4px 8px;
+  -padding: 3px 4px 5px 6px; }
+
+#search-submit {
+  background: url("../images/fangdajing.png") no-repeat center white;
+  /*right -2px top 1px*/
+  text-indent: -9999em;
+  border: 0;
+  float: left;
+  width: 21px;
+  height: 22px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 0 10px 10px 0;
+  margin-right: 5px; }
+
+#info {
+  margin-top: 24px;
+  color: #787a78; }
+
+#info a {
+  color: #369;
+  margin-left: 5px; }
+
+#main {
+  min-height: 600px;
+  margin-top: 30px;
+  margin-bottom: 100px; }
+
+#main-left {
+  float: left;
+  width: 640px; }
+
+#main-right {
+  float: right;
+  width: 260px; }
+
+#footer {
+  width: 960px;
+  bottom: 20px;
+  color: #999;
+  border-top: 1px dotted #999;
+  border-bottom: 1px dotted #999;
+  height: 36px;
+  line-height: 36px; }
+
+#footer-right a {
+  color: #369; }

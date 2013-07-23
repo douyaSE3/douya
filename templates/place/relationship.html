@@ -1,0 +1,54 @@
+{% extends "iframe_base.html" %}  
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" /> 
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" /> 
+{% endblock %}
+
+{% block main %}
+<form action="#" method="post">
+    <fieldset>
+        <legend>想去/去过/在这儿</legend>
+        {{ form.non_field_errors }}
+        {% csrf_token %} 
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+        <div class="form-item">
+            {{ field.label_tag }} {{ field }} {{ field.errors }} 
+        </div>
+        {% endfor %}
+        <div class="form-item"><input type="submit"></div>
+    </fieldset>
+</form>
+{% endblock %}  
+
+{% block js %}
+<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+{{ form.media }}
+<script type="text/javascript">
+$("form").submit(function(){  
+    var formData = new FormData($('form')[0]);
+    $.ajax({ 
+        data: formData,
+        type: $('form').attr('method'), 
+        url: $('form').attr('action'), 
+        success: function(response) { 
+            if(response.success){
+                parent.location.reload();   
+                parent.$.fancybox.close();
+            }else{
+                alert("是不是不小心输错或者输漏了什么 > <");
+            }   
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+    return false;
+});
+</script>
+{% endblock %}

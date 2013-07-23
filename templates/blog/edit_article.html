@@ -1,0 +1,30 @@
+{% extends "base.html" %}  
+
+{% block title %} 发表文字 {% endblock %} 
+
+{% block js2 %}{{ form.media }}{% endblock %}
+
+{% block main-left %}   
+<form id="info-form" class="article-form" action="#" method="post">
+    <fieldset>
+        <legend>发表文章</legend>
+        {{ form.non_field_errors }}
+        {% csrf_token %} 
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+        <div class="form-item">
+            <p>{{ field.label_tag }}</p>
+            {{ field }} {{ field.errors }} 
+        </div>
+        {% endfor %}
+        <div class="form-item"><input type="submit" value="发表" class="btn"/></div>
+    </fieldset>
+</form>
+{% endblock %}  
+
+{% block main-right %} 
+
+{% endblock %}  
+

@@ -1,0 +1,88 @@
+@charset "utf-8";
+
+#view-plan-top{
+    height: 50px;margin-bottom: 10px;
+}
+    #view-plan-top-center{
+        margin-left: 20px;
+    }
+        #view-plan-top-center h1{
+            font-size: 20px;line-height: 30px;
+        }
+        #view-plan-top-center span{
+            font-size: 12px;
+        }
+    #view-plan-top-right{
+        height: 50px;line-height: 50px;
+    }
+
+#view-plan-plays{
+    position: relative;margin-top: 20px;
+}
+    .view-plan-play{
+        position: relative;height: 150px;
+    }
+        .view-plan-play-left{
+            width: 120px;height: 150px;background: url("../images/view-plan-play-left-line.png") repeat-y center;
+        }
+            .view-plan-play-left-content{
+                background: url("../images/view-plan-play-left-bg.png") no-repeat center;width: 80px;height: 78px;margin-top: 20px;
+                text-align: center;line-height: 78px;color: rgb(128, 128, 128);
+            }
+        .view-plan-play-right{
+            width: 490px;height:95px;background: #f2f2f2;padding: 15px;box-shadow: 0 2px 2px rgb(201, 201, 201);
+        }
+            .view-plan-play-right-cost{
+                font-size: 18px;background: rgba(0, 115, 182, 0.5);color: #fff;height: 32px;line-height: 32px;text-align: center;
+                margin-right: -20px;margin-top: 10px;font-weight: bold;padding: 4px 6px;
+            }
+            .view-plan-play-right-arrow{
+                width: 4px;height: 4px;background: url("../images/view-plan-play-right-arrow.png") no-repeat center;margin-right: -20px;
+            }
+            .view-plan-play-right-name{
+                font-size: 22px;color: #072;
+            }
+            .view-plan-play-right-time{
+                font-size: 14px;color: #cbcaca;margin-top: 3px;
+            }
+                .view-plan-play-right-time-arrow{
+                    width: 20px;height: 12px;background: url("../images/view-plan-play-right-time-arrow.png") no-repeat center;
+                    display: inline-block;
+                }
+            .view-plan-play-right-tips{
+                margin-top:5px;font-size: 13px;color: rgb(124, 124, 124);
+            }
+        .view-plan-route{
+            position: absolute;top: -34px;cursor: pointer;
+        }
+            .view-plan-route-detail{
+                position: absolute;width: 280px;cursor: default;top: -180px;left: 32px;z-index:999;
+            }
+                .view-plan-route-detail-content{
+                    background: #fff;border: 1px solid rgb(171, 171, 171);padding: 10px;height: 100px;
+                    overflow: hidden;font-size: 13px;
+                }
+                    .view-plan-route-detail-close{
+                        width: 14px;height: 14px;background: url("../images/view-plan-route-detail-close.png") no-repeat center;
+                        cursor: pointer;
+                    }
+                    .view-plan-route-detail-content p{
+                        margin-bottom: 3px;
+                    }
+                .view-plan-route-detail-footer{
+                    position: relative;top: -4px;
+                    width: 100px;height: 70px;background: url("../images/view-plan-route-detail-footer.png") no-repeat center;
+                }
+
+#view-plan-photos{
+    background: #f2f2f2;padding: 12px;padding-bottom: 32px;
+
+    .fancybox{
+        margin-top:6px;
+    }
+
+            
+    #view-plan-photos .photo-wrapper{
+        float: left;margin-right: 8px;margin-bottom: 8px;
+    }
+}
