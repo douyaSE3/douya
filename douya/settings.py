@@ -50,7 +50,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = 'D:/ENV/ENV1/Scripts/douya/media'
+MEDIA_ROOT = '/Users/jiangzifan/Desktop/douya_dev/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -118,7 +118,7 @@ ROOT_URLCONF = 'douya.urls'
 WSGI_APPLICATION = 'douya.wsgi.application'
 
 TEMPLATE_DIRS = (   
-    'D:/ENV/ENV1/Scripts/douya/templates',
+    '/Users/jiangzifan/Desktop/douya_dev/templates',
     # 'templates',
 )
 
