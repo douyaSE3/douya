@@ -15,7 +15,7 @@ DATABASES = {
         'NAME': 'douya',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'jzf19921222',
         'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -50,7 +50,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = '/Users/jiangzifan/Desktop/douya_dev/media'
+MEDIA_ROOT = '/home/jzf/douya/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -118,7 +118,7 @@ ROOT_URLCONF = 'douya.urls'
 WSGI_APPLICATION = 'douya.wsgi.application'
 
 TEMPLATE_DIRS = (   
-    '/Users/jiangzifan/Desktop/douya_dev/templates',
+    '/home/jzf/douya//templates',
     # 'templates',
 )
 

@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>  
+<head>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <title>{% block title %}{% endblock %}</title>  
+    <title>{% block title %}{% endblock %}</title>
 
-    <link rel="stylesheet" href="/static/css/base.css">  
-    <link rel="stylesheet" href="/static/css/commom.css">   
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/commom.css">
     <link rel="stylesheet" href="/static/css/component.css">
-    <link rel="stylesheet" type="text/css" href="/static/fancybox/jquery.fancybox.css?v=2.1.4" media="screen" />  
+    <link rel="stylesheet" type="text/css" href="/static/fancybox/jquery.fancybox.css?v=2.1.4" media="screen" />
 
     {% block css %}{% endblock %}
     {% block js2 %}{% endblock %}
 
-</head>  
-<body>     
+</head>
+<body>
     <header id="header" class="w pr">
         <div class="w960 bc">
             <a href="{% url "place.views.index" %}" id="logo" class="fl"></a>
             <nav id="nav" class="fl">
                 <a href="{% url "place.views.index" %}">首页</a>
-                {% if request.user.is_authenticated %}   
+                {% if request.user.is_authenticated %}
                 <a href="{% url "traveller.views.traveller_index" request.user.id %}">个人主页</a>
                 {% else %}
                 <a href="{% url "traveller.views.login_view" %}">个人主页</a>
                 {% endif %}
-                {% if request.user.is_authenticated %}   
+                {% if request.user.is_authenticated %}
                 <a href="{% url "place.views.add_plan" %}" class="fancybox fancybox.iframe">新的旅程</a>
                 {% else %}
                 <a href="{% url "traveller.views.login_view" %}">新的旅程</a>
-                {% endif %}          
+                {% endif %}
                 <!-- <a href="{% url "place.views.place_index" %}">随便逛逛</a> -->
             </nav>
             <div id="info" class="fr">
-            {% if request.user.is_authenticated %}              
+            {% if request.user.is_authenticated %}
                 <a href="{% url "traveller.views.modify" %}">设置</a>
                 <a href="{% url "traveller.views.logout_view" %}">退出</a>
-            {% else %}           
+            {% else %}
                 <a href="{% url "traveller.views.login_view" %}">登录</a>
-                <a href="{% url "traveller.views.register" %}">注册</a>            
+                <a href="{% url "traveller.views.register" %}">注册</a>
             {% endif %}
-            </div>  
+            </div>
             <div id="search" class="fr">
                 <form method="GET" action="{% url "place.views.place_search" %}">
                     <input type="text" name="q" placeholder="想去哪玩儿" method="GET" action="{% url "place.views.place_search" %}" id="search-text">
@@ -54,29 +54,25 @@
     <div id="main" class="w960 pr bc clearfix">
         <section id="main-left">{% block main-left %}{% endblock %}</section>
         <aside id="main-right">{% block main-right %}{% endblock %} </aside>
-        {% block main %}{% endblock %} 
+        {% block main %}{% endblock %}
     </div>
-      
+
     <footer id="footer" class="w pr bc">
         <div id="footer-left" class="fl">
-            © 2011－2013 douya.com, all rights reserved 
+            © 2011－2013 douya.com, all rights reserved
         </div>
         <div id="footer-right" class="fr">
             <a href="http://www.jiangzifan.com">关于作者</a>
         </div>
     </footer>
 
-    <script language="javascript" src="/static/js/jquery-1.9.1.min.js"></script> 
+    <script language="javascript" src="/static/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="/static/fancybox/jquery.fancybox.js?v=2.1.4"></script>
     <script language="javascript" src="/static/js/commom.js"></script>
 
     {% block js %}
-    {% endblock %} 
+    {% endblock %}
 
-
-</body>  
-    
-</html>
-
-
-    
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(
