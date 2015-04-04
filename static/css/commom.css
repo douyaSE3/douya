@@ -1,3 +1,5 @@
+@charset "utf-8";
+/* line 3, ../scss/commom.scss */
 body {
   position: relative;
   width: 100%;
@@ -5,45 +7,61 @@ body {
   min-height: 100%;
   background-color: #ffffff;
   font-family: Helvetica,Arial,sans-serif;
-  font-size: 12px; }
+  font-size: 12px;
+}
 
+/* line 8, ../scss/commom.scss */
 #header {
   min-width: 960px;
   height: 60px;
   top: 0;
-  background: #edf4ed; }
+  background: #edf4ed;
+}
 
+/* line 11, ../scss/commom.scss */
 #logo {
   display: block;
   width: 139px;
   height: 27px;
   margin-top: 12px;
-  background: url("../images/logo_new.png") no-repeat center left; }
+  background: url("../images/logo_new.png") no-repeat center left;
+}
 
+/* line 14, ../scss/commom.scss */
 #nav {
   margin-left: 40px;
-  margin-top: 22px; }
+  margin-top: 22px;
+}
 
+/* line 17, ../scss/commom.scss */
 #nav a {
   color: #072;
   font-size: 14px;
   float: left;
   margin-left: 20px;
-  margin-right: 20px; }
+  margin-right: 20px;
+}
 
+/* line 20, ../scss/commom.scss */
 #nav a:hover {
   background-color: #072;
-  color: #fff; }
+  color: #fff;
+}
 
+/* line 23, ../scss/commom.scss */
 #nav-user-info {
-  color: white; }
+  color: white;
+}
 
+/* line 26, ../scss/commom.scss */
 #search {
   height: 60px;
   line-height: 60px;
   margin-right: 50px;
-  display: block; }
+  display: block;
+}
 
+/* line 29, ../scss/commom.scss */
 #search-text {
   outline: 0 none;
   width: 142px;
@@ -56,10 +74,12 @@ body {
   margin-top: 20px;
   border-radius: 10px 0 0 10px;
   padding: 4px 4px 4px 8px;
-  -padding: 3px 4px 5px 6px; }
+  -padding: 3px 4px 5px 6px;
+}
 
+/* line 33, ../scss/commom.scss */
 #search-submit {
-  background: url("../images/fangdajing.png") no-repeat center white;
+  background: url("../images/fangdajing.png") no-repeat center #fff;
   /*right -2px top 1px*/
   text-indent: -9999em;
   border: 0;
@@ -69,29 +89,41 @@ body {
   margin-top: 20px;
   cursor: pointer;
   border-radius: 0 10px 10px 0;
-  margin-right: 5px; }
+  margin-right: 5px;
+}
 
+/* line 37, ../scss/commom.scss */
 #info {
   margin-top: 24px;
-  color: #787a78; }
+  color: #787a78;
+}
 
+/* line 40, ../scss/commom.scss */
 #info a {
   color: #369;
-  margin-left: 5px; }
+  margin-left: 5px;
+}
 
+/* line 44, ../scss/commom.scss */
 #main {
   min-height: 600px;
   margin-top: 30px;
-  margin-bottom: 100px; }
+  margin-bottom: 100px;
+}
 
+/* line 47, ../scss/commom.scss */
 #main-left {
   float: left;
-  width: 640px; }
+  width: 640px;
+}
 
+/* line 50, ../scss/commom.scss */
 #main-right {
   float: right;
-  width: 260px; }
+  width: 260px;
+}
 
+/* line 54, ../scss/commom.scss */
 #footer {
   width: 960px;
   bottom: 20px;
@@ -99,7 +131,10 @@ body {
   border-top: 1px dotted #999;
   border-bottom: 1px dotted #999;
   height: 36px;
-  line-height: 36px; }
+  line-height: 36px;
+}
 
+/* line 57, ../scss/commom.scss */
 #footer-right a {
-  color: #369; }
+  color: #369;
+}

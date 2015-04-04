@@ -5,4 +5,4 @@ media
 */*.pyc
 .DS_Store
 .idea/
-
+static/.sass-cache/

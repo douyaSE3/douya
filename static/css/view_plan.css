@@ -1,34 +1,52 @@
+@charset "utf-8";
+/* line 3, ../scss/view_plan.scss */
 #view-plan-top {
   height: 50px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+}
 
+/* line 6, ../scss/view_plan.scss */
 #view-plan-top-center {
-  margin-left: 20px; }
+  margin-left: 20px;
+}
 
+/* line 9, ../scss/view_plan.scss */
 #view-plan-top-center h1 {
   font-size: 20px;
-  line-height: 30px; }
+  line-height: 30px;
+}
 
+/* line 12, ../scss/view_plan.scss */
 #view-plan-top-center span {
-  font-size: 12px; }
+  font-size: 12px;
+}
 
+/* line 15, ../scss/view_plan.scss */
 #view-plan-top-right {
   height: 50px;
-  line-height: 50px; }
+  line-height: 50px;
+}
 
+/* line 19, ../scss/view_plan.scss */
 #view-plan-plays {
   position: relative;
-  margin-top: 20px; }
+  margin-top: 20px;
+}
 
+/* line 22, ../scss/view_plan.scss */
 .view-plan-play {
   position: relative;
-  height: 150px; }
+  height: 150px;
+}
 
+/* line 25, ../scss/view_plan.scss */
 .view-plan-play-left {
   width: 120px;
   height: 150px;
-  background: url("../images/view-plan-play-left-line.png") repeat-y center; }
+  background: url("../images/view-plan-play-left-line.png") repeat-y center;
+}
 
+/* line 28, ../scss/view_plan.scss */
 .view-plan-play-left-content {
   background: url("../images/view-plan-play-left-bg.png") no-repeat center;
   width: 80px;
@@ -36,15 +54,19 @@
   margin-top: 20px;
   text-align: center;
   line-height: 78px;
-  color: gray; }
+  color: gray;
+}
 
+/* line 32, ../scss/view_plan.scss */
 .view-plan-play-right {
   width: 490px;
   height: 95px;
   background: #f2f2f2;
   padding: 15px;
-  box-shadow: 0 2px 2px #c9c9c9; }
+  box-shadow: 0 2px 2px #c9c9c9;
+}
 
+/* line 35, ../scss/view_plan.scss */
 .view-plan-play-right-cost {
   font-size: 18px;
   background: rgba(0, 115, 182, 0.5);
@@ -55,78 +77,107 @@
   margin-right: -20px;
   margin-top: 10px;
   font-weight: bold;
-  padding: 4px 6px; }
+  padding: 4px 6px;
+}
 
+/* line 39, ../scss/view_plan.scss */
 .view-plan-play-right-arrow {
   width: 4px;
   height: 4px;
   background: url("../images/view-plan-play-right-arrow.png") no-repeat center;
-  margin-right: -20px; }
+  margin-right: -20px;
+}
 
+/* line 42, ../scss/view_plan.scss */
 .view-plan-play-right-name {
   font-size: 22px;
-  color: #072; }
+  color: #072;
+}
 
+/* line 45, ../scss/view_plan.scss */
 .view-plan-play-right-time {
   font-size: 14px;
   color: #cbcaca;
-  margin-top: 3px; }
+  margin-top: 3px;
+}
 
+/* line 48, ../scss/view_plan.scss */
 .view-plan-play-right-time-arrow {
   width: 20px;
   height: 12px;
   background: url("../images/view-plan-play-right-time-arrow.png") no-repeat center;
-  display: inline-block; }
+  display: inline-block;
+}
 
+/* line 52, ../scss/view_plan.scss */
 .view-plan-play-right-tips {
   margin-top: 5px;
   font-size: 13px;
-  color: #7c7c7c; }
+  color: #7c7c7c;
+}
 
+/* line 55, ../scss/view_plan.scss */
 .view-plan-route {
   position: absolute;
   top: -34px;
-  cursor: pointer; }
+  cursor: pointer;
+}
 
+/* line 58, ../scss/view_plan.scss */
 .view-plan-route-detail {
   position: absolute;
   width: 280px;
   cursor: default;
   top: -180px;
   left: 32px;
-  z-index: 999; }
+  z-index: 999;
+}
 
+/* line 61, ../scss/view_plan.scss */
 .view-plan-route-detail-content {
   background: #fff;
   border: 1px solid #ababab;
   padding: 10px;
   height: 100px;
   overflow: hidden;
-  font-size: 13px; }
+  font-size: 13px;
+}
 
+/* line 65, ../scss/view_plan.scss */
 .view-plan-route-detail-close {
   width: 14px;
   height: 14px;
   background: url("../images/view-plan-route-detail-close.png") no-repeat center;
-  cursor: pointer; }
+  cursor: pointer;
+}
 
+/* line 69, ../scss/view_plan.scss */
 .view-plan-route-detail-content p {
-  margin-bottom: 3px; }
+  margin-bottom: 3px;
+}
 
+/* line 72, ../scss/view_plan.scss */
 .view-plan-route-detail-footer {
   position: relative;
   top: -4px;
   width: 100px;
   height: 70px;
-  background: url("../images/view-plan-route-detail-footer.png") no-repeat center; }
+  background: url("../images/view-plan-route-detail-footer.png") no-repeat center;
+}
 
+/* line 77, ../scss/view_plan.scss */
 #view-plan-photos {
   background: #f2f2f2;
   padding: 12px;
-  padding-bottom: 32px; }
-  #view-plan-photos .fancybox {
-    margin-top: 6px; }
-  #view-plan-photos #view-plan-photos .photo-wrapper {
-    float: left;
-    margin-right: 8px;
-    margin-bottom: 8px; }
+  padding-bottom: 32px;
+}
+/* line 80, ../scss/view_plan.scss */
+#view-plan-photos .fancybox {
+  margin-top: 6px;
+}
+/* line 85, ../scss/view_plan.scss */
+#view-plan-photos #view-plan-photos .photo-wrapper {
+  float: left;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}

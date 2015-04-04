@@ -1,6 +1,6 @@
 import os.path
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -15,7 +15,7 @@ DATABASES = {
         'NAME': 'douya',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'root',
-        'PASSWORD': 'jzf19921222',
+        'PASSWORD': '19921222',
         'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
