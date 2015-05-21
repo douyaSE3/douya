@@ -132,7 +132,7 @@ function search(){
                     newNode.find('a').data('id',response.results[i].id);
                     newNode.find('a').data('description',response.results[i].description);
                     newNode.find('a').data('parent_struct',response.results[i].parent_struct);
-                    newNode.find('a img').attr("src","/media/place/"+(response.results[i].has_img?response.results[i].id:"default")+".jpg/")
+                    newNode.find('a img').attr("src","/media/place/"+(response.results[i].has_img?response.results[i].id:"default")+".jpg")
                     $('#edit-plan-main-search-results').append(newNode);
                 }
                 $('#edit-plan-main-search-result').addClass("none");
